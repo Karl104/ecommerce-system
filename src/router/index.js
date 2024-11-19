@@ -1,19 +1,26 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import App from '../App.vue' // The "The not today Cafe" page
-import LoginPage from '../views/LoginPage.vue' // The Login Page
+//import Home from '../views/HomePage.vue'
+import LoginPage from '../views/LoginPage.vue'
+import SignUp from '../components/SignUp.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
+    // {
+    //path: '/', // Home route
+    //name: 'home',
+    //component: Home, // Use Home.vue for the "/" route
+    //},
     {
-      path: '/', // Home route
-      name: 'home',
-      component: App,
-    },
-    {
-      path: '/LoginPage', // Login route
+      path: '/LoginPage',
       name: 'login',
       component: LoginPage,
+    },
+
+    {
+      path: '/SignUp',
+      name: 'SignUp',
+      component: SignUp,
     },
   ],
 })
