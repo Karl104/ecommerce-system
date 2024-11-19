@@ -38,7 +38,7 @@
         </div>
 
         <div class="input-submit">
-          <button class="submit-btn" id="submit"></button>
+          <button class="submit-btn" id="submit" @click="handleLogin"></button>
           <label for="submit">Sign in</label>
         </div>
 
@@ -51,8 +51,26 @@
 </template>
 
 <script>
+//what will happens when you dont put any text or password in the login
 export default {
   name: 'LoginPage',
+  data() {
+    return {
+      email: '',
+      password: '',
+    }
+  },
+  methods: {
+    handleLogin() {
+      // Handle login logic
+      if (this.email && this.password) {
+        console.log('Logging in with', this.email, this.password)
+        //it will alert when you dont put the any text and numbers
+      } else {
+        alert('indicates required field')
+      }
+    },
+  },
 }
 </script>
 
