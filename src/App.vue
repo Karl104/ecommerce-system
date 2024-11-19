@@ -1,13 +1,14 @@
 <script setup lang="ts">
-import LoginPage from './views/LoginPage.vue'
+// No need to import anything, routing will handle dynamic components
 </script>
 
 <template>
   <div class="app">
-    <LoginPage></LoginPage>
-
-    <h1>The not today Cafe</h1>
+    <!-- router-view dynamically loads the correct route content -->
+    <router-view></router-view>
   </div>
 </template>
 
-<script></script>
+<style>
+/* Global styles (optional) */
+</style>
