@@ -43,7 +43,7 @@
         </div>
 
         <div class="sign-up-link">
-          <p>Don't Have Account? <a href="#">Sign Up</a></p>
+          <p>Don't Have an Account? <router-link to="/signup">Sign Up</router-link></p>
         </div>
       </div>
     </div>
