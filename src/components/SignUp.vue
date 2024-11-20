@@ -9,34 +9,45 @@
         </div>
 
         <div class="input-box">
-          <label>Email Address</label>
-          <input type="text" placeholder="Enter your Email Address" />
+          <label>Address</label>
+          <input type="text" placeholder="Enter your Address" />
+        </div>
 
-          <div class="column">
-            <div class="input-box">
-              <label>Phone Number</label>
-              <input type="text" placeholder="Enter your Full Name" />
+        <div class="column">
+          <div class="input-box">
+            <label>Phone Number</label>
+            <input type="text" placeholder="Enter your Phone Number" />
+          </div>
+
+          <div class="input-box">
+            <label>Birth Date</label>
+            <input type="date" placeholder="Type your Birth Date" />
+          </div>
+        </div>
+
+        <div class="gender-box">
+          <h3>Gender</h3>
+          <div class="gender-option">
+            <div class="gender">
+              <input type="radio" id="check-male" name="gender" />
+              <label for="check-male">Male</label>
             </div>
 
-            <div class="input-box">
-              <label>Phone Number</label>
-              <input type="text" placeholder="Type your Phone Number" />
-            </div>
-            <div class="gender-box">
-              <h3>Gender</h3>
-              <div class="gender-option">
-                <div class="gender">
-                  <input type="radio" id="check-male" name="gender" />
-                  <label for="check-male">Male</label>
-                </div>
-
-                <div class="gender">
-                  <input type="radio" id="check-female" name="gender" />
-                  <label for="check-female">Female</label>
-                </div>
-              </div>
+            <div class="gender">
+              <input type="radio" id="check-female" name="gender" />
+              <label for="check-female">Female</label>
             </div>
           </div>
+        </div>
+
+        <div class="input-box">
+          <label>Email</label>
+          <input type="text" placeholder="Email Address" />
+        </div>
+
+        <div class="input-box">
+          <label>Password</label>
+          <input type="password" placeholder="Password" />
         </div>
       </form>
     </section>
@@ -137,9 +148,9 @@
   display: flex;
   column-gap: 15px;
 }
-/* Responsive */
 
-@media screen and (max-width: 500) {
+/* Responsive */
+@media screen and (max-width: 500px) {
   .form .column {
     flex-wrap: wrap;
   }
