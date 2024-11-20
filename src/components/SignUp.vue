@@ -22,6 +22,20 @@
               <label>Phone Number</label>
               <input type="text" placeholder="Type your Phone Number" />
             </div>
+            <div class="gender-box">
+              <h3>Gender</h3>
+              <div class="gender-option">
+                <div class="gender">
+                  <input type="radio" id="check-male" name="gender" />
+                  <label for="check-male">Male</label>
+                </div>
+
+                <div class="gender">
+                  <input type="radio" id="check-female" name="gender" />
+                  <label for="check-female">Female</label>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </form>
@@ -92,6 +106,31 @@
   border: 1px solid #ddd;
   border-radius: 6px;
   padding: 0 15px;
+}
+
+.form .gender-box {
+  margin-top: 20px;
+}
+
+.gender-box h3 {
+  color: #333;
+  font-size: 1rem;
+  font-weight: 400;
+  margin-bottom: 8px;
+}
+
+.form :where(.gender-option, .gender) {
+  display: flex;
+  align-items: center;
+  column-gap: 30px;
+}
+
+.form .gender {
+  column-gap: 5px;
+}
+
+.form :where(.gender, input, .gender label) {
+  cursor: pointer;
 }
 
 .form .column {
