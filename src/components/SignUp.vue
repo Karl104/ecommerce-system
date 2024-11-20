@@ -49,6 +49,8 @@
           <label>Password</label>
           <input type="password" placeholder="Password" />
         </div>
+
+        <button>Create Account</button>
       </form>
     </section>
   </div>
@@ -123,6 +125,9 @@
   margin-top: 20px;
 }
 
+.gender input {
+}
+
 .gender-box h3 {
   color: #333;
   font-size: 1rem;
@@ -147,6 +152,25 @@
 .form .column {
   display: flex;
   column-gap: 15px;
+}
+
+.form button {
+  height: 55px;
+  width: 100%;
+  color: #fff;
+  font-size: 1rem;
+  border: none;
+  margin-top: 30px;
+  cursor: pointer;
+  border-radius: 6px;
+  font-weight: 400;
+  transition: all 0.2s ease;
+  background-color: rgb(0, 0, 0);
+}
+
+.form button:hover {
+  background-color: rgb(0, 0, 0);
+  color: white;
 }
 
 /* Responsive */
