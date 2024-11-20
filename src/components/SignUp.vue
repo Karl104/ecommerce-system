@@ -125,8 +125,8 @@
   margin-top: 20px;
 }
 
-.gender input {
-}
+/* .gender input {
+} */
 
 .gender-box h3 {
   color: #333;
