@@ -9,10 +9,10 @@ const router = createRouter({
     {
       path: '/', // Home route
       name: 'home',
-      component: Home, // Use Home.vue for the "/" route
+      component: Home,
     },
     {
-      path: '/LoginPage',
+      path: '/Login',
       name: 'login',
       component: LoginPage,
     },
