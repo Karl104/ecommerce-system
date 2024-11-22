@@ -11,7 +11,7 @@
 
           <ul class="navbar">
             <li><a href="#">Menu</a></li>
-            <li><a href="#">About</a></li>
+            <li><a href="#about">About</a></li>
           </ul>
         </div>
 
@@ -45,10 +45,24 @@
           <button class="home-order">Order Now</button>
         </div>
 
-        <img src="../assets/iced not today latte.png" alt="iced not today" />
+        <img src="../assets/iced not today latte.png" alt="iced not today" class="home-image" />
       </section>
 
-      <section ck></section>
+      <section id="about" class="about-section">
+        <div class="about-text">
+          <h1>About Us</h1>
+          <p>
+            Ever get the feeling of not doing anything? Yes, we get it. We all have those days where
+            laziness kicks in and you think, "If I can just have coffee, then I can do what I have
+            to do today". That's what we call 'The Not Today' feeling, and that's where we came up
+            with the tagline 'A Laziness Antidote.
+          </p>
+        </div>
+
+        <div class="about-image">
+          <img src="../assets/view.jpg" alt="view" />
+        </div>
+      </section>
     </div>
   </div>
 </template>
@@ -88,11 +102,12 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 2px 1%;
+  padding: 3px 1%;
   background-color: #ffffff;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   /* transition: all 0.5s ease; */
 }
+
 .logo {
   display: flex;
   width: 130px;
@@ -174,7 +189,7 @@ li {
 
 .home-section {
   display: flex;
-  padding: 55px;
+  padding: 60px;
   background-color: #ffffff;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
@@ -184,12 +199,19 @@ li {
   font-family: 'Quicksand';
   color: #000000;
   margin-bottom: 30px;
+  margin-top: 20px;
 }
 
 .home-text p {
   font-size: 20px;
   font-family: 'Kanit' sans-serif;
   color: rgb(114, 115, 116);
+}
+
+.home-image {
+  display: flex;
+  margin-top: 50px;
+  width: 60%;
 }
 
 .home-text button {
@@ -212,6 +234,48 @@ li {
 .home-text button:hover {
   background-color: var(--text-color);
   color: #ffffff;
+}
+
+.about-section {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  background-color: #b8b8b8;
+}
+
+.about-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 40px;
+  color: #232323;
+}
+
+.about-text p {
+  font-size: 1.6rem;
+  margin-bottom: 20px;
+}
+
+.about-text h1 {
+  font-family: 'Kanit';
+  font-size: 4.5rem;
+  margin-bottom: 60px;
+}
+
+.about-image {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.about-image img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
 }
 </style>
 
