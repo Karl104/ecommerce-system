@@ -50,7 +50,7 @@
           <input type="password" placeholder="Password" />
         </div>
 
-        <button>Create Account</button>
+        <button @click="handleSignUp">Create Account</button>
       </form>
     </section>
   </div>
@@ -126,7 +126,7 @@
 }
 
 /* .gender input {
-} */
+  } */
 
 .gender-box h3 {
   color: #333;
@@ -181,4 +181,27 @@
 }
 </style>
 
-<script></script>
+<script>
+export default {
+  data() {
+    return {
+      fullName: '',
+      address: '',
+      phoneNumber: '',
+      birthDate: '',
+      gender: '',
+      email: '',
+      password: '',
+    }
+  },
+  methods: {
+    handleSignUp() {
+      if (this.email && this.password) {
+        console.log('Logging in with', this.email, this.password)
+      } else {
+        alert('Indicates required field')
+      }
+    },
+  },
+}
+</script>
