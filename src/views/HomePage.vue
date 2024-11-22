@@ -2,16 +2,18 @@
   <div class="all">
     <div class="body-home">
       <header class="header-home">
-        <a href="#" class="logo">
-          <img src="../assets/logo-lazy.png" alt=" logo" class="logo" />
-        </a>
+        <div class="head">
+          <a href="#" class="logo">
+            <img src="../assets/logo-lazy.png" alt=" logo" class="logo" />
+          </a>
 
-        <span><strong>The not Today Cafe</strong></span>
+          <!-- <span><strong>The not Today Cafe</strong></span> -->
 
-        <ul class="navbar">
-          <li><a href="#">Menu</a></li>
-          <li><a href="#">About</a></li>
-        </ul>
+          <ul class="navbar">
+            <li><a href="#">Menu</a></li>
+            <li><a href="#">About</a></li>
+          </ul>
+        </div>
 
         <div class="main">
           <!-- <a href="#" class="user" @click="goToLogin">Sign In</a> -->
@@ -95,6 +97,12 @@ span {
 .main {
   display: flex;
   align-items: center;
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  margin-left: 20px;
 }
 
 .main .signIn,
