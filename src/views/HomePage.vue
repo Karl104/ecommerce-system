@@ -23,14 +23,41 @@
           <a href="#" class="icon">
             <img src="../assets/cart.png" alt="cart" />
           </a>
+
+          <!-- <a href="#" class="icon-menu">
+            <img src="../assets/menu.png" alt="menu" style="width: 25px" />
+          </a> -->
+
+          <input type="checkbox" id="check" />
+          <label for="check" class="checkbtn">
+            <img src="../assets/menu.png" alt="menu" style="width: 30px" />
+          </label>
         </div>
       </header>
+
+      <section class="home-section">
+        <div class="home-text">
+          <h1>Beat the Laziness with Our Signature Iced Spanish Latte</h1>
+          <p>
+            Our signature Spanish Latte. The ultimate iced coffee to beat the "Not Today" blues and
+            energize your day.
+          </p>
+          <button class="home-order">Order Now</button>
+        </div>
+
+        <img src="../assets/iced not today latte.png" alt="iced not today" />
+      </section>
+
+      <section ck></section>
     </div>
   </div>
 </template>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
+
 .all {
   padding: 0;
   margin: 0;
@@ -61,7 +88,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 5%;
+  padding: 2px 1%;
   background-color: #ffffff;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   /* transition: all 0.5s ease; */
@@ -103,6 +130,7 @@ span {
   display: flex;
   align-items: center;
   margin-left: 20px;
+  text-transform: uppercase;
 }
 
 .main .signIn,
@@ -133,6 +161,57 @@ li {
 .icon {
   margin-right: 30px;
   margin-left: 30px;
+}
+
+#check {
+  display: none;
+}
+
+.checkbtn img {
+  cursor: pointer;
+  width: 30px;
+}
+
+.home-section {
+  display: flex;
+  padding: 55px;
+  background-color: #ffffff;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.home-text h1 {
+  font-size: 50px;
+  font-family: 'Quicksand';
+  color: #000000;
+  margin-bottom: 30px;
+}
+
+.home-text p {
+  font-size: 20px;
+  font-family: 'Kanit' sans-serif;
+  color: rgb(114, 115, 116);
+}
+
+.home-text button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 30px;
+  padding: 8px 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: rgb(0, 0, 0);
+  border: 2px solid var(--text-color);
+  border-radius: 5px;
+  background-color: transparent;
+  transition:
+    background-color 0.3s,
+    color 0.3s;
+}
+
+.home-text button:hover {
+  background-color: var(--text-color);
+  color: #ffffff;
 }
 </style>
 
