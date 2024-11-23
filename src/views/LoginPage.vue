@@ -65,7 +65,6 @@ export default {
       // Handle login logic
       if (this.email && this.password) {
         console.log('Logging in with', this.email, this.password)
-        //it will alert when you dont put the any text and numbers
       } else {
         alert('indicates required field')
       }
