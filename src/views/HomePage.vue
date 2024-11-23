@@ -189,10 +189,11 @@ li {
 
 .home-section {
   display: flex;
-  padding: 60px;
+  padding: 20px;
   background-color: #effffc;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   margin-bottom: 50px;
+  margin-top: 80px;
 }
 
 .home-text h1 {
@@ -241,9 +242,9 @@ li {
   display: flex;
   flex-direction: row;
   width: 100vw;
-  height: 100vh;
+  height: 99vh;
   background-color: #b8b8b8;
-  margin-top: 50px; /*add spacing to top of page */
+  margin-top: 75px; /*add spacing to top of page */
 }
 
 .about-text {
