@@ -49,6 +49,10 @@
       </section>
 
       <section id="about" class="about-section">
+        <div class="about-image">
+          <img src="../assets/view.jpg" alt="view" />
+        </div>
+
         <div class="about-text">
           <h1>About Us</h1>
           <p>
@@ -57,10 +61,6 @@
             to do today". That's what we call 'The Not Today' feeling, and that's where we came up
             with the tagline 'A Laziness Antidote.
           </p>
-        </div>
-
-        <div class="about-image">
-          <img src="../assets/view.jpg" alt="view" />
         </div>
       </section>
     </div>
@@ -102,7 +102,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 3px 1%;
+  padding: 5px 1%;
   background-color: #ffffff;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   /* transition: all 0.5s ease; */
@@ -110,9 +110,9 @@
 
 .logo {
   display: flex;
-  width: 130px;
+  width: 85px;
   align-items: center;
-  height: 130px;
+  height: auto;
 }
 
 span {
@@ -190,8 +190,9 @@ li {
 .home-section {
   display: flex;
   padding: 60px;
-  background-color: #ffffff;
+  background-color: #effffc;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 50px;
 }
 
 .home-text h1 {
@@ -238,9 +239,11 @@ li {
 
 .about-section {
   display: flex;
+  flex-direction: row;
   width: 100vw;
   height: 100vh;
   background-color: #b8b8b8;
+  margin-top: 50px; /*add spacing to top of page */
 }
 
 .about-text {
