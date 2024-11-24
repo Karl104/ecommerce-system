@@ -44,8 +44,9 @@
           </p>
           <button class="home-order">Order Now</button>
         </div>
-
-        <img src="../assets/iced not today latte.png" alt="iced not today" class="home-image" />
+        <div class="home-image-wrapper">
+          <img src="../assets/heyy.png" alt="iced not today" class="home-image" />
+        </div>
       </section>
 
       <section id="about" class="about-section">
@@ -192,57 +193,55 @@ li {
   align-items: center;
   justify-content: space-between;
   padding: 75px;
-  width: 100vw;
+  width: 100%;
   height: 100vh;
-  background-color: #d6fff8;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: #edffff;
+}
+
+.home-text {
+  flex: 1;
+  padding-right: 20px;
 }
 
 .home-text h1 {
-  flex: 1;
-  font-size: 50px;
-  font-family: 'Quicksand';
+  font-size: 3rem;
+  font-family: 'Quicksand', sans-serif;
   color: #000000;
-  margin-bottom: 30px;
-  margin-top: 20px;
-  padding: 20px;
+  margin-bottom: 20px;
 }
 
 .home-text p {
-  font-size: 20px;
-  font-family: 'Kanit' sans-serif;
-  color: rgb(114, 115, 116);
-}
-
-.home-image {
-  display: flex;
-  flex: 1;
-  object-fit: contain;
-  margin-left: 20px;
-  margin-top: 50px;
-  width: 70%;
+  font-size: 1.2rem;
+  font-family: 'Kanit', sans-serif;
+  color: rgb(46, 46, 46);
+  margin-bottom: 30px;
 }
 
 .home-text button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 30px;
-  padding: 8px 20px;
+  padding: 10px 20px;
   font-size: 1rem;
   font-weight: 600;
-  color: rgb(0, 0, 0);
-  border: 2px solid var(--text-color);
+  color: #000;
+  border: 2px solid #000;
   border-radius: 5px;
   background-color: transparent;
-  transition:
-    background-color 0.3s,
-    color 0.3s;
+  transition: all 0.3s ease;
 }
 
-.home-text button:hover {
-  background-color: var(--text-color);
-  color: #ffffff;
+.home-image-wrapper {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.home-image {
+  max-width: 80%;
+  max-height: 90%;
+  object-fit: contain;
+  border-radius: 10px;
+  background-color: #ffffff;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .about-section {
