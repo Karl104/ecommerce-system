@@ -62,7 +62,6 @@ export default {
   },
   methods: {
     handleLogin() {
-      // Handle login logic
       if (this.email && this.password) {
         console.log('Logging in with', this.email, this.password)
       } else {
@@ -75,6 +74,9 @@ export default {
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
+
 * {
   margin: 0;
   padding: 0%;
