@@ -189,19 +189,23 @@ li {
 
 .home-section {
   display: flex;
-  padding: 20px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 75px;
+  width: 100vw;
+  height: 100vh;
   background-color: #d6fff8;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  margin-bottom: 50px;
-  margin-top: 130px;
 }
 
 .home-text h1 {
+  flex: 1;
   font-size: 50px;
   font-family: 'Quicksand';
   color: #000000;
   margin-bottom: 30px;
   margin-top: 20px;
+  padding: 20px;
 }
 
 .home-text p {
@@ -212,6 +216,9 @@ li {
 
 .home-image {
   display: flex;
+  flex: 1;
+  object-fit: contain;
+  margin-left: 20px;
   margin-top: 50px;
   width: 70%;
 }
