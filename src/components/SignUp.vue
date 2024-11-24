@@ -114,7 +114,7 @@
   width: 100%;
   outline: none;
   font-size: 1rem;
-  color: #707070;
+  color: #000000;
   margin-top: 8px;
   border: 1px solid #ddd;
   border-radius: 6px;
