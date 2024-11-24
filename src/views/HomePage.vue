@@ -190,10 +190,10 @@ li {
 .home-section {
   display: flex;
   padding: 20px;
-  background-color: #effffc;
+  background-color: #d6fff8;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   margin-bottom: 50px;
-  margin-top: 80px;
+  margin-top: 130px;
 }
 
 .home-text h1 {
@@ -213,7 +213,7 @@ li {
 .home-image {
   display: flex;
   margin-top: 50px;
-  width: 60%;
+  width: 70%;
 }
 
 .home-text button {
@@ -244,7 +244,7 @@ li {
   width: 100vw;
   height: 99vh;
   background-color: #b8b8b8;
-  margin-top: 75px; /*add spacing to top of page */
+  margin-top: 100px; /*add spacing to top of page */
 }
 
 .about-text {
