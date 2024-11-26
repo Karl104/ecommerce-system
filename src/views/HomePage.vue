@@ -42,7 +42,7 @@
             Our signature Spanish Latte. The ultimate iced coffee to beat the "Not Today" blues and
             energize your day.
           </p>
-          <button class="home-order">Order Now</button>
+          <button class="home-order">Buy Now</button>
         </div>
         <div class="home-image-wrapper">
           <img src="../assets/heyy.png" alt="iced not today" class="home-image" />
@@ -217,15 +217,30 @@ li {
   margin-bottom: 30px;
 }
 
-.home-text button {
-  padding: 10px 20px;
+.home-order {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 30px;
+  padding: 8px 20px;
   font-size: 1rem;
   font-weight: 600;
-  color: #000;
-  border: 2px solid #000;
+  color: rgb(0, 0, 0);
+  border: 2px solid var(--text-color);
   border-radius: 5px;
   background-color: transparent;
-  transition: all 0.3s ease;
+  transition:
+    background-color 0.3s,
+    color 0.3s;
+}
+
+.home-order:hover {
+  background-color: #000;
+  color: #fff;
+}
+
+.home-order:active {
+  background-color: #555;
 }
 
 .home-image-wrapper {
