@@ -18,7 +18,7 @@
               type="radio"
               v-model="selectedShot"
               :value="{ name: 'Single Shot', price: 0 }"
-              @change="UpdateTotal"
+              @change="updateTotal"
             />
             Single Shot (Free)
           </label>
@@ -27,7 +27,7 @@
               type="radio"
               v-model="selectedShot"
               :value="{ name: 'Double Shot', price: 0 }"
-              @change="UpdateTotal"
+              @change="updateTotal"
             />
             Double Shot (Free)
           </label>
@@ -36,7 +36,7 @@
               type="radio"
               v-model="selectedShot"
               :value="{ name: 'Triple Shot', price: 80 }"
-              @change="UpdateTotal"
+              @change="updateTotal"
             />
             Triple Shot (+ ₱80)
           </label>
@@ -51,7 +51,7 @@
               type="checkbox"
               :value="{ name: 'Stevia Drops', price: 80 }"
               v-model="extras"
-              @change="UpdateTotal"
+              @change="updateTotal"
             />
             Stevia Drops (+ ₱80)
           </label>
@@ -60,7 +60,7 @@
               type="checkbox"
               :value="{ name: 'Syrup', price: 40 }"
               v-model="extras"
-              @change="UpdateTotal"
+              @change="updateTotal"
             />
             Syrup (+ ₱40)
           </label>
@@ -69,7 +69,7 @@
               type="checkbox"
               :value="{ name: 'Sugar Syrup', price: 10 }"
               v-model="extras"
-              @change="UpdateTotal"
+              @change="updateTotal"
             />
             Sugar Syrup (+ ₱10)
           </label>
@@ -78,7 +78,7 @@
               type="checkbox"
               :value="{ name: 'Oatmilk', price: 60 }"
               v-model="extras"
-              @change="UpdateTotal"
+              @change="updateTotal"
             />
             Oatmilk (+ ₱60)
           </label>
@@ -87,7 +87,7 @@
               type="checkbox"
               :value="{ name: 'Sweertcream', price: 60 }"
               v-model="extras"
-              @change="UpdateTotal"
+              @change="updateTotal"
             />
             Sweertcream (+ ₱60)
           </label>
@@ -96,7 +96,7 @@
               type="checkbox"
               :value="{ name: 'Seasalt foam', price: 60 }"
               v-model="extras"
-              @change="UpdateTotal"
+              @change="updateTotal"
             />
             Seasalt foam (+ ₱60)
           </label>
@@ -105,9 +105,34 @@
               type="checkbox"
               :value="{ name: 'Half & Half', price: 60 }"
               v-model="extras"
-              @change="UpdateTotal"
+              @change="updateTotal"
             />
             Half & Half (+ ₱60)
+          </label>
+        </div>
+
+        <div class="option-group">
+          <h3>Size</h3>
+          <p>Select up to 1 (optional)</p>
+          <br />
+          <label>
+            <input
+              type="radio"
+              v-model="selectedSize"
+              :value="{ name: 'Tall', price: 0 }"
+              @change="updateTotal"
+            />
+            Tall (Free)
+          </label>
+
+          <label>
+            <input
+              type="radio"
+              v-model="selectedSize"
+              :value="{ name: 'Grande', price: 20 }"
+              @change="updateTotal"
+            />
+            Grande (+ ₱20)
           </label>
         </div>
 
