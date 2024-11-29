@@ -240,7 +240,7 @@ export default {
           password: this.password,
         })
 
-        // this.goToLogin()
+        // this.goToLogin() //kuan uncomment koni kung naa nay database
       }
     },
     goToLogin() {
