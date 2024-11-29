@@ -2,26 +2,26 @@
   <div class="body-signup">
     <section class="container-signup">
       <header><h1>Create an Account</h1></header>
-      <form action="#" class="form">
+      <form action="#" class="form" @submit.prevent="handleSignUp">
         <div class="input-box">
           <label>Full Name</label>
-          <input type="text" placeholder="Enter your Full Name" />
+          <input type="text" placeholder="Enter your Full Name" v-model="fullName" />
         </div>
 
         <div class="input-box">
           <label>Address</label>
-          <input type="text" placeholder="Enter your Address" />
+          <input type="text" placeholder="Enter your Address" v-model="address" />
         </div>
 
         <div class="column">
           <div class="input-box">
             <label>Phone Number</label>
-            <input type="text" placeholder="Enter your Phone Number" />
+            <input type="text" placeholder="Enter your Phone Number" v-model="phoneNumber" />
           </div>
 
           <div class="input-box">
             <label>Birth Date</label>
-            <input type="date" placeholder="Type your Birth Date" />
+            <input type="date" placeholder="Type your Birth Date" v-model="birthDate" />
           </div>
         </div>
 
@@ -29,12 +29,12 @@
           <h3>Gender</h3>
           <div class="gender-option">
             <div class="gender">
-              <input type="radio" id="check-male" name="gender" />
+              <input type="radio" id="check-male" name="gender" v-model="gender" value="male" />
               <label for="check-male">Male</label>
             </div>
 
             <div class="gender">
-              <input type="radio" id="check-female" name="gender" />
+              <input type="radio" id="check-female" name="gender" v-model="gender" value="female" />
               <label for="check-female">Female</label>
             </div>
           </div>
@@ -42,15 +42,15 @@
 
         <div class="input-box">
           <label>Email</label>
-          <input type="text" placeholder="Email Address" />
+          <input type="text" placeholder="Email Address" v-model="email" />
         </div>
 
         <div class="input-box">
           <label>Password</label>
-          <input type="password" placeholder="Password" />
+          <input type="password" placeholder="Password" v-model="password" />
         </div>
 
-        <button @click="handleSignUp">Create Account</button>
+        <button type="submit">Create Account</button>
       </form>
     </section>
   </div>
@@ -195,10 +195,25 @@ export default {
   },
   methods: {
     handleSignUp() {
-      if (this.email && this.password) {
-        console.log('Logging in with', this.email, this.password)
+      if (
+        !this.fullName ||
+        !this.address ||
+        !this.phoneNumber ||
+        !this.birthDate ||
+        !this.email ||
+        !this.password
+      ) {
+        alert('Please fill in all the fields')
       } else {
-        alert('Indicates required field')
+        console.log('Signing up with:', {
+          fullName: this.fullName,
+          address: this.address,
+          phoneNumber: this.phoneNumber,
+          birthDate: this.birthDate,
+          gender: this.gender,
+          email: this.email,
+          password: this.password,
+        })
       }
     },
   },
