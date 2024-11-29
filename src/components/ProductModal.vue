@@ -6,7 +6,9 @@
         <button class="close-btn" @click="$emit('close')">&times;</button>
         <img src="../assets/iced not today latte.png" alt="Iced not today latte" />
         <h2>Iced Not Today Latte</h2>
+        <br />
         <strong><p>₱ 190</p></strong>
+        <br />
         <p>Most ordered. Our own signature Spanish latte</p>
 
         <div class="option-group">
@@ -43,6 +45,7 @@
         <div class="option-group">
           <h3>Drink Extras</h3>
           <h4>Select up to 7 (optional)</h4>
+          <br />
           <label>
             <input
               type="checkbox"
