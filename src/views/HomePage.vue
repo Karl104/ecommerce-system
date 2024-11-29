@@ -310,15 +310,14 @@ import ProductModal from '../components/ProductModal.vue'
 
 export default {
   components: {
-    ProductModal, // Ensure the modal component is imported and registered
+    ProductModal,
   },
   data() {
     return {
-      showModal: false, // Controls the visibility of the modal
+      showModal: false,
     }
   },
   methods: {
-    // Navigation methods
     goToLogin() {
       this.$router.push('/login')
       console.log('Navigating to login page')
@@ -330,11 +329,11 @@ export default {
     // Modal control methods
     openModal() {
       this.showModal = true
-      console.log('Modal opened:', this.showModal) // Log for debugging
+      console.log('Modal opened:', this.showModal)
     },
     closeModal() {
       this.showModal = false
-      console.log('Modal closed:', this.showModal) // Log for debugging
+      console.log('Modal closed:', this.showModal)
     },
   },
 }
