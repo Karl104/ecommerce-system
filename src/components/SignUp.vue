@@ -1,5 +1,8 @@
 <template>
   <div class="body-signup">
+    <div class="boxLog">
+      <button class="back-btn" @click="goToLogin">Back to Login</button>
+    </div>
     <section class="container-signup">
       <header><h1>Create an Account</h1></header>
       <form action="#" class="form" @submit.prevent="handleSignUp">
@@ -69,10 +72,35 @@
 .body-signup {
   min-height: 100vh;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 20px;
   background: #dcd9d9;
+}
+
+.boxLog {
+  width: 100%;
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.back-btn {
+  background-color: transparent;
+  border: 2px solid black;
+  color: black;
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.back-btn:hover {
+  background-color: black;
+  color: white;
 }
 
 .container-signup {
@@ -124,9 +152,6 @@
 .form .gender-box {
   margin-top: 20px;
 }
-
-/* .gender input {
-  } */
 
 .gender-box h3 {
   color: #333;
@@ -214,7 +239,13 @@ export default {
           email: this.email,
           password: this.password,
         })
+
+        // this.goToLogin()
       }
+    },
+    goToLogin() {
+      this.$router.push('/login')
+      console.log('Navigating to login page')
     },
   },
 }
