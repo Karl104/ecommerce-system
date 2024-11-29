@@ -1,132 +1,128 @@
 <template>
   <div class="iced-not-today">
-    <div class="modal-content">
-      <div class="modal-overlay" @click.self="$emit('close')">
-        <div class="modal-content">
-          <button class="close-btn" @click="$emit('close')">&times;</button>
-          <img src="../assets/iced not today latte.png" alt="Iced not today latte" />
-          <h2>Iced Not Today Latte</h2>
-          <p>₱ 190</p>
-          <p>Most ordered. Our own signature Spanish latte</p>
+    <div class="modal-overlay" @click.self="$emit('close')">
+      <!-- Modal Content -->
+      <div class="modal-content">
+        <button class="close-btn" @click="$emit('close')">&times;</button>
+        <img src="../assets/iced not today latte.png" alt="Iced not today latte" />
+        <h2>Iced Not Today Latte</h2>
+        <strong><p>₱ 190</p></strong>
+        <p>Most ordered. Our own signature Spanish latte</p>
 
-          <div class="option-group">
-            <h3>Choice of Shot (Select 1)</h3>
-
-            <label>
-              <input
-                type="radio"
-                v-model="selectedShot"
-                :value="{ name: 'Single Shot', price: 0 }"
-                @change="UpdateTotal"
-              />
-              Single Shot (Free)
-            </label>
-            <label>
-              <input
-                type="radio"
-                v-model="selectedShot"
-                :value="{ name: 'Double Shot', price: 0 }"
-                @change="UpdateTotal"
-              />
-              Double Shot (Free)
-            </label>
-            <label>
-              <input
-                type="radio"
-                v-model="selectedShot"
-                :value="{ name: 'Triple Shot', price: 80 }"
-                @change="UpdateTotal"
-              />
-              Triple Shot (+ ₱80)
-            </label>
-          </div>
-
-          <div class="option-group">
-            <h3>Drink Extras</h3>
-            <h4>Select up to 7 (optional)</h4>
-            <label>
-              <input
-                type="checkbox"
-                :value="{ name: 'Stevia Drops', price: 80 }"
-                v-model="extras"
-                @change="UpdateTotal"
-              />Stevia Drops (+ ₱80)
-            </label>
-
-            <label>
-              <input
-                type="checkbox"
-                :value="{ name: 'Syrup', price: 40 }"
-                v-model="extras"
-                @change="UpdateTotal"
-              />
-              Syrup (+ ₱40)
-            </label>
-
-            <label>
-              <input
-                type="checkbox"
-                :value="{ name: 'Sugar Syrup', price: 10 }"
-                v-model="extras"
-                @change="UpdateTotal"
-              />
-              Sugar Syrup (+ ₱10)
-            </label>
-
-            <label>
-              <input
-                type="checkbox"
-                :value="{ name: 'Oatmilk', price: 60 }"
-                v-model="extras"
-                @change="UpdateTotal"
-              />
-              Oatmilk (+ ₱60)
-            </label>
-
-            <label>
-              <input
-                type="checkbox"
-                :value="{ name: 'Sweertcream', price: 60 }"
-                v-model="extras"
-                @change="UpdateTotal"
-              />
-              Sweertcream (+ ₱60)
-            </label>
-
-            <label>
-              <input
-                type="checkbox"
-                :value="{ name: 'Seasalt foam', price: 60 }"
-                v-model="extras"
-                @change="UpdateTotal"
-              />
-              Seasalt foam (+ ₱60)
-            </label>
-
-            <label>
-              <input
-                type="checkbox"
-                :value="{ name: 'Half & Half', price: 60 }"
-                v-model="extras"
-                @change="UpdateTotal"
-              />
-              Half & Half (+ ₱60)
-            </label>
-          </div>
-
-          <div class="option-group">
-            <h3>Special Instructions</h3>
-            <textarea
-              v-model="instructions"
-              placeholder="Write your Special Requests here"
-              rows="4"
-            ></textarea>
-          </div>
+        <div class="option-group">
+          <h3>Choice of Shot (Select 1)</h3>
+          <label>
+            <input
+              type="radio"
+              v-model="selectedShot"
+              :value="{ name: 'Single Shot', price: 0 }"
+              @change="UpdateTotal"
+            />
+            Single Shot (Free)
+          </label>
+          <label>
+            <input
+              type="radio"
+              v-model="selectedShot"
+              :value="{ name: 'Double Shot', price: 0 }"
+              @change="UpdateTotal"
+            />
+            Double Shot (Free)
+          </label>
+          <label>
+            <input
+              type="radio"
+              v-model="selectedShot"
+              :value="{ name: 'Triple Shot', price: 80 }"
+              @change="UpdateTotal"
+            />
+            Triple Shot (+ ₱80)
+          </label>
         </div>
-      </div>
-      <div class="modal-footer">
-        <div class="total-price">Total: ₱{{ totalPrice }}</div>
-        <button class="add-to-cart" @click="addToCart">Add to Cart</button>
+
+        <div class="option-group">
+          <h3>Drink Extras</h3>
+          <h4>Select up to 7 (optional)</h4>
+          <label>
+            <input
+              type="checkbox"
+              :value="{ name: 'Stevia Drops', price: 80 }"
+              v-model="extras"
+              @change="UpdateTotal"
+            />
+            Stevia Drops (+ ₱80)
+          </label>
+          <label>
+            <input
+              type="checkbox"
+              :value="{ name: 'Syrup', price: 40 }"
+              v-model="extras"
+              @change="UpdateTotal"
+            />
+            Syrup (+ ₱40)
+          </label>
+          <label>
+            <input
+              type="checkbox"
+              :value="{ name: 'Sugar Syrup', price: 10 }"
+              v-model="extras"
+              @change="UpdateTotal"
+            />
+            Sugar Syrup (+ ₱10)
+          </label>
+          <label>
+            <input
+              type="checkbox"
+              :value="{ name: 'Oatmilk', price: 60 }"
+              v-model="extras"
+              @change="UpdateTotal"
+            />
+            Oatmilk (+ ₱60)
+          </label>
+          <label>
+            <input
+              type="checkbox"
+              :value="{ name: 'Sweertcream', price: 60 }"
+              v-model="extras"
+              @change="UpdateTotal"
+            />
+            Sweertcream (+ ₱60)
+          </label>
+          <label>
+            <input
+              type="checkbox"
+              :value="{ name: 'Seasalt foam', price: 60 }"
+              v-model="extras"
+              @change="UpdateTotal"
+            />
+            Seasalt foam (+ ₱60)
+          </label>
+          <label>
+            <input
+              type="checkbox"
+              :value="{ name: 'Half & Half', price: 60 }"
+              v-model="extras"
+              @change="UpdateTotal"
+            />
+            Half & Half (+ ₱60)
+          </label>
+        </div>
+
+        <div class="option-group">
+          <h3>Special Instructions</h3>
+          <textarea
+            v-model="instructions"
+            placeholder="Write your Special Requests here"
+            rows="4"
+          ></textarea>
+        </div>
+
+        <div class="modal-footer">
+          <div class="total-price">Total: ₱{{ totalPrice }}</div>
+          <button class="add-to-cart" @click="addToCart" :disabled="!selectedShot">
+            Add to Cart
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -172,6 +168,8 @@ body {
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
   position: relative;
 }
 
@@ -188,9 +186,10 @@ body {
   right: 10px;
   background: transparent;
   border: none;
-  font-size: 1.5rem;
+  font-size: 2.5rem;
   cursor: pointer;
   color: var(--text-color);
+  z-index: 1001;
 }
 
 .close-btn:hover {
@@ -208,7 +207,7 @@ body {
 
 .option-group label {
   display: block;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
   font-size: 0.9rem;
 }
 
@@ -227,8 +226,15 @@ textarea {
   margin: 16px 0;
 }
 
+.modal-footer {
+  padding: 20px 0;
+  border-radius: 1px solid #ddd;
+  background-color: #f9f9f9;
+  text-align: center;
+}
+
 .add-to-cart {
-  background: #ff6347;
+  background: #828282;
   color: white;
   padding: 10px;
   border: none;
@@ -237,12 +243,19 @@ textarea {
   width: 100%;
   font-size: 1rem;
   font-weight: bold;
-  text-align: center;
-  margin-top: 20px;
+  transition:
+    background-color 0.3s,
+    color 0.3s;
 }
 
 .add-to-cart:hover {
-  background: #e5533f;
+  background: #000000;
+}
+
+.add-to-cart:disabled {
+  background: #d3d3d3;
+  color: #888888;
+  cursor: not-allowed;
 }
 </style>
 
