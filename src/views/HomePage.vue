@@ -42,7 +42,7 @@
             Our signature Spanish Latte. The ultimate iced coffee to beat the "Not Today" blues and
             energize your day.
           </p>
-          <button class="home-order">Buy Now</button>
+          <button class="home-order" @click="openModal">Buy Now</button>
         </div>
         <div class="home-image-wrapper">
           <img src="../assets/heyy.png" alt="iced not today" class="home-image" />
@@ -66,6 +66,7 @@
       </section>
     </div>
   </div>
+  <ProductModal v-if="showModal" @close="closeModal" />
 </template>
 
 <style>
@@ -305,13 +306,35 @@ li {
 </style>
 
 <script>
+import ProductModal from '../components/ProductModal.vue'
+
 export default {
+  components: {
+    ProductModal, // Ensure the modal component is imported and registered
+  },
+  data() {
+    return {
+      showModal: false, // Controls the visibility of the modal
+    }
+  },
   methods: {
+    // Navigation methods
     goToLogin() {
       this.$router.push('/login')
+      console.log('Navigating to login page')
     },
     goToSignUp() {
       this.$router.push('/signup')
+      console.log('Navigating to signup page')
+    },
+    // Modal control methods
+    openModal() {
+      this.showModal = true
+      console.log('Modal opened:', this.showModal) // Log for debugging
+    },
+    closeModal() {
+      this.showModal = false
+      console.log('Modal closed:', this.showModal) // Log for debugging
     },
   },
 }

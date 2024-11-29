@@ -173,7 +173,6 @@
   color: white;
 }
 
-/* Responsive */
 @media screen and (max-width: 500px) {
   .form .column {
     flex-wrap: wrap;

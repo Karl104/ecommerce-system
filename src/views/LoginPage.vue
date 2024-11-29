@@ -51,7 +51,6 @@
 </template>
 
 <script>
-//what will happens when you dont put any text or password in the login
 export default {
   name: 'LoginPage',
   data() {
@@ -62,10 +61,14 @@ export default {
   },
   methods: {
     handleLogin() {
-      if (this.email && this.password) {
-        console.log('Logging in with', this.email, this.password)
-      } else {
+      if (!this.email && !this.password) {
         alert('indicates required field')
+      } else if (!this.email) {
+        alert('Please enter your email')
+      } else if (!this.password) {
+        alert('Please enter your password')
+      } else {
+        console.log('Logging in with', this.email, this.password)
       }
     },
   },
