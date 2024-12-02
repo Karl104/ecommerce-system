@@ -37,7 +37,13 @@
             </div>
 
             <div class="gender">
-              <input type="radio" id="check-female" name="gender" v-model="gender" value="female" />
+              <input
+                type="radio"
+                id="c heck-female"
+                name="gender"
+                v-model="gender"
+                value="female"
+              />
               <label for="check-female">Female</label>
             </div>
           </div>
