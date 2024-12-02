@@ -24,10 +24,6 @@
             <img src="../assets/cart.png" alt="cart" />
           </a>
 
-          <!-- <a href="#" class="icon-menu">
-            <img src="../assets/menu.png" alt="menu" style="width: 25px" />
-          </a> -->
-
           <input type="checkbox" id="check" />
           <label for="check" class="checkbtn">
             <img src="../assets/menu.png" alt="menu" style="width: 30px" />
@@ -64,8 +60,32 @@
           </p>
         </div>
       </section>
+      <section id="menu" class="menu-section">
+        <div class="best-product">
+          <h1>Best Selling Products</h1>
+          <div class="product-container">
+            <div class="product-card">
+              <img src="../assets/berry-matcha.jpg" alt="berry-matcha" />
+              <h4>Berry Matcha</h4>
+              <div>
+                <span> ₱ 240</span>
+                <button>+</button>
+              </div>
+            </div>
+            <div class="product-card">
+              <img src="../assets/Espresso-Frappe.jpg" alt="espresso-frappe" />
+              <h4>Espresso Frappe</h4>
+              <div>
+                <span> ₱ 200</span>
+                <button>+</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   </div>
+
   <ProductModal v-if="showModal" @close="closeModal" />
 </template>
 
@@ -303,6 +323,94 @@ li {
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
 }
+
+.menu-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100vw;
+  height: 90vh;
+  background-color: #deffe1;
+  margin-top: 100px;
+  min-height: 90vh;
+}
+
+.best-product {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+}
+
+.best-product h1 {
+  font-size: 3rem;
+  font-family: 'Kanit';
+  color: #000000;
+  margin: 0;
+  padding: 20px 0;
+  text-align: center;
+}
+
+.product-container {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+  padding: 20px;
+}
+
+.product-card {
+  max-width: 12rem;
+  width: 90%;
+  background-color: rgb(255, 255, 255);
+  padding: 1rem;
+  box-shadow: 0 5px 5px #000000;
+  font-family: Arial, Helvetica, sans-serif;
+  cursor: pointer;
+}
+
+.product-card img {
+  max-width: 100%;
+  border-radius: 8px;
+}
+
+.product-card h4 {
+  font-size: 1.3rem;
+  margin: 0.5rem 0;
+  font-weight: bold;
+}
+
+.product-card div {
+  font-size: 1.2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.product-card button {
+  background-color: #000;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  font-size: 1em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.product-card:hover {
+  color: #fff;
+  background-color: lightslategray;
+}
+
+.product-card:hover button {
+  color: #000;
+  background-color: #fff;
+}
 </style>
 
 <script>
@@ -326,7 +434,7 @@ export default {
       this.$router.push('/signup')
       console.log('Navigating to signup page')
     },
-    // Modal control methods
+
     openModal() {
       this.showModal = true
       console.log('Modal opened:', this.showModal)
