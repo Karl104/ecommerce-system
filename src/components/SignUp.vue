@@ -12,6 +12,11 @@
         </div>
 
         <div class="input-box">
+          <label>User Name</label>
+          <input type="text" placeholder="Enter your User Name" v-model="userName" />
+        </div>
+
+        <div class="input-box">
           <label>Address</label>
           <input type="text" placeholder="Enter your Address" v-model="address" />
         </div>
@@ -216,6 +221,7 @@ export default {
   data() {
     return {
       fullName: '',
+      userName: '',
       address: '',
       phoneNumber: '',
       birthDate: '',
@@ -228,6 +234,7 @@ export default {
     handleSignUp() {
       if (
         !this.fullName ||
+        !this.userName ||
         !this.address ||
         !this.phoneNumber ||
         !this.birthDate ||
@@ -238,6 +245,7 @@ export default {
       } else {
         console.log('Signing up with:', {
           fullName: this.fullName,
+          userName: this.userName,
           address: this.address,
           phoneNumber: this.phoneNumber,
           birthDate: this.birthDate,
