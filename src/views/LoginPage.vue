@@ -13,10 +13,10 @@
           <input
             type="text"
             class="input-field"
-            placeholder="Email"
+            placeholder="Username"
             autocomplete="off"
             required
-            v-model="email"
+            v-model="userName"
           />
         </div>
 
@@ -33,7 +33,7 @@
 
         <div class="forgot">
           <section>
-            <a href="#">Forgot Password</a>
+            <a href="#">Forgot Password or Username?</a>
           </section>
         </div>
 
@@ -55,20 +55,38 @@ export default {
   name: 'LoginPage',
   data() {
     return {
-      email: '',
+      userName: '',
       password: '',
+      adminCredentials: {
+        username: 'admin',
+        password: '1234',
+      },
     }
   },
   methods: {
     handleLogin() {
-      if (!this.email && !this.password) {
-        alert('indicates required field')
-      } else if (!this.email) {
-        alert('Please enter your email')
+      // Check for empty fields
+      if (!this.userName && !this.password) {
+        alert('Both fields are required.')
+        return
+      } else if (!this.userName) {
+        alert('Please enter your username.')
+        return
       } else if (!this.password) {
-        alert('Please enter your password')
+        alert('Please enter your password.')
+        return
+      }
+
+      // mo validate ang admin credentials
+      if (
+        this.userName === this.adminCredentials.username &&
+        this.password === this.adminCredentials.password
+      ) {
+        alert('Welcome, Admin!')
+        // Redirect to the admin dashboard or another route
+        this.$router.push('/admin-dashboard') // Replace with your admin route
       } else {
-        console.log('Logging in with', this.email, this.password)
+        alert('Invalid username or password.')
       }
     },
   },
