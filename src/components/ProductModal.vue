@@ -1,142 +1,73 @@
 <template>
-  <div class="iced-not-today">
+  <div class="modal">
     <div class="modal-overlay" @click.self="$emit('close')">
-      <!-- Modal Content -->
       <div class="modal-content">
         <button class="close-btn" @click="$emit('close')">&times;</button>
-        <img src="../assets/iced not today latte.png" alt="Iced not today latte" />
-        <h2>Iced Not Today Latte</h2>
+        <img :src="product.image" alt="Product Image" />
+        <h2>{{ product.name }}</h2>
         <br />
-        <strong><p>₱ 190</p></strong>
+        <strong>
+          <p>₱ {{ product.price }}</p>
+        </strong>
         <br />
-        <p>Most ordered. Our own signature Spanish latte</p>
+        <p>{{ product.description || 'No description available.' }}</p>
 
-        <div class="option-group">
-          <h3>Choice of Shot (Select 1)</h3>
-          <label>
-            <input
-              type="radio"
-              v-model="selectedShot"
-              :value="{ name: 'Single Shot', price: 0 }"
-              @change="updateTotal"
-            />
-            Single Shot (Free)
-          </label>
-          <label>
-            <input
-              type="radio"
-              v-model="selectedShot"
-              :value="{ name: 'Double Shot', price: 0 }"
-              @change="updateTotal"
-            />
-            Double Shot (Free)
-          </label>
-          <label>
-            <input
-              type="radio"
-              v-model="selectedShot"
-              :value="{ name: 'Triple Shot', price: 80 }"
-              @change="updateTotal"
-            />
-            Triple Shot (+ ₱80)
+        <div class="option-group" v-if="product.hasDrinkType">
+          <h3>Options (Required)</h3>
+          <label v-for="type in drinkTypeOptions" :key="type" :for="`type-${type}`">
+            <input id="type-{{ type }}" type="radio" v-model="selectedDrinkType" :value="type" />
+            {{ type }}
           </label>
         </div>
 
-        <div class="option-group">
+        <div class="option-group" v-if="product.hasShot">
+          <h3>Choice of Shot (Required)</h3>
+          <label v-for="shot in shotOptions" :key="shot.name" :for="`shot-${shot.name}`">
+            <input
+              id="shot-{{ shot.name  }}"
+              type="radio"
+              v-model="selectedShot"
+              :value="shot"
+              @change="updateTotal"
+            />
+            {{ shot.name }} ({{ shot.price === 0 ? 'Free' : `+ ₱${shot.price}` }})
+          </label>
+        </div>
+
+        <div class="option-group" v-if="product.hasDrinkExtras">
           <h3>Drink Extras</h3>
           <h4>Select up to 7 (optional)</h4>
           <br />
-          <label>
+          <label v-for="extra in extraOptions" :key="extra.name" :for="`extra-${extra.name}`">
             <input
+              id="extra-{{ extra.name }}"
               type="checkbox"
-              :value="{ name: 'Stevia Drops', price: 80 }"
+              :value="extra"
               v-model="extras"
               @change="updateTotal"
             />
-            Stevia Drops (+ ₱80)
-          </label>
-          <label>
-            <input
-              type="checkbox"
-              :value="{ name: 'Syrup', price: 40 }"
-              v-model="extras"
-              @change="updateTotal"
-            />
-            Syrup (+ ₱40)
-          </label>
-          <label>
-            <input
-              type="checkbox"
-              :value="{ name: 'Sugar Syrup', price: 10 }"
-              v-model="extras"
-              @change="updateTotal"
-            />
-            Sugar Syrup (+ ₱10)
-          </label>
-          <label>
-            <input
-              type="checkbox"
-              :value="{ name: 'Oatmilk', price: 60 }"
-              v-model="extras"
-              @change="updateTotal"
-            />
-            Oatmilk (+ ₱60)
-          </label>
-          <label>
-            <input
-              type="checkbox"
-              :value="{ name: 'Sweertcream', price: 60 }"
-              v-model="extras"
-              @change="updateTotal"
-            />
-            Sweertcream (+ ₱60)
-          </label>
-          <label>
-            <input
-              type="checkbox"
-              :value="{ name: 'Seasalt foam', price: 60 }"
-              v-model="extras"
-              @change="updateTotal"
-            />
-            Seasalt foam (+ ₱60)
-          </label>
-          <label>
-            <input
-              type="checkbox"
-              :value="{ name: 'Half & Half', price: 60 }"
-              v-model="extras"
-              @change="updateTotal"
-            />
-            Half & Half (+ ₱60)
+            {{ extra.name }} (+ ₱{{ extra.price }})
           </label>
         </div>
 
-        <div class="option-group">
+        <div class="option-group" v-if="product.hasSize">
           <h3>Size</h3>
           <p>Select up to 1 (optional)</p>
           <br />
-          <label>
+          <label v-for="size in sizeOptions" :key="size.name" :for="`size-${size.name}`">
             <input
+              id="size-{{ size.name }}"
               type="radio"
               v-model="selectedSize"
-              :value="{ name: 'Tall', price: 0 }"
+              :value="size"
               @change="updateTotal"
             />
-            Tall (Free)
-          </label>
-
-          <label>
-            <input
-              type="radio"
-              v-model="selectedSize"
-              :value="{ name: 'Grande', price: 20 }"
-              @change="updateTotal"
-            />
-            Grande (+ ₱20)
+            {{ size.name }} ({{ size.price > 0 ? `+ ₱${size.price}` : 'Free' }})
           </label>
         </div>
 
-        <div class="option-group">
+        <!-- Special Instructions Group -->
+        <div class="option-group" v-if="product.hasSpecialInstructions">
           <h3>Special Instructions</h3>
           <textarea
             v-model="instructions"
@@ -145,9 +76,15 @@
           ></textarea>
         </div>
 
+        <!-- Modal Footer -->
         <div class="modal-footer">
           <div class="total-price">Total: ₱{{ totalPrice }}</div>
-          <button class="add-to-cart" @click="addToCart" :disabled="!selectedShot">
+          <button
+            class="add-to-cart"
+            @click="addToCart"
+            :disabled="!canAddToCart"
+            :style="{ cursor: canAddToCart ? 'pointer' : 'not-allowed' }"
+          >
             Add to Cart
           </button>
         </div>
@@ -167,6 +104,10 @@ body {
   font-family: 'Kanit', sans-serif;
 }
 
+body.modal-open {
+  overflow: hidden;
+}
+
 :root {
   --primary-color: #ff6347;
   --primary-hover: #e5533f;
@@ -180,7 +121,7 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background: var(--overlay-color);
+  background: rgba(0, 0, 0, 0.5); /* Background overlay */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -204,8 +145,14 @@ body {
 .modal-content img {
   width: 100%;
   margin: 0 auto 20px;
+  height: auto;
+  object-fit: cover;
+  max-height: 80vh;
+  max-width: 100%;
   display: block;
   align-self: flex-start;
+  margin-bottom: 20px;
+  border-radius: 5px;
 }
 
 .close-btn {
@@ -289,53 +236,92 @@ textarea {
 
 <script>
 export default {
+  props: {
+    product: {
+      type: Object,
+      required: true,
+    },
+  },
   data() {
     return {
-      isModalOpen: false,
-      basePrice: 190,
-      totalPrice: 190,
+      basePrice: this.product.price || 0,
+      totalPrice: this.product.price || 0,
       selectedShot: null,
       extras: [],
       selectedSize: null,
-      specialInstructions: '',
+      instructions: '',
+      selectedDrinkType: null,
+      drinkTypeOptions: ['Hot', 'Cold'],
+      shotOptions: [
+        { name: 'Single Shot', price: 0 },
+        { name: 'Double Shot', price: 0 },
+        { name: 'Triple Shot', price: 80 },
+      ],
+      extraOptions: [
+        { name: 'Stevia Drops', price: 80 },
+        { name: 'Syrup', price: 40 },
+        { name: 'Sugar Syrup', price: 10 },
+        { name: 'Oatmilk', price: 60 },
+        { name: 'Sweetcream', price: 60 },
+        { name: 'Seasalt Foam', price: 60 },
+        { name: 'Half & Half', price: 60 },
+      ],
+      sizeOptions: [
+        { name: 'Tall', price: 0 },
+        { name: 'Grande', price: 20 },
+      ],
     }
   },
+  computed: {
+    canAddToCart() {
+      const hasRequiredShot = this.product.hasShot ? this.selectedShot !== null : true
+      return hasRequiredShot
+    },
+  },
   methods: {
-    openModal() {
-      this.isModalOpen = true
-    },
-    closeModal() {
-      this.isModalOpen = false
-    },
     updateTotal() {
       let total = this.basePrice
 
+      // Add shot price if a shot is selected
       if (this.selectedShot) {
-        total += this.selectedShot.price
+        total += this.selectedSnhot.price
       }
 
+      // Add size price if a size is selected
       if (this.selectedSize) {
         total += this.selectedSize.price
       }
 
+      // Add extra prices for selected extras
       if (this.extras.length > 0) {
         this.extras.forEach((extra) => {
           total += extra.price
         })
       }
 
+      // Update the total price
       this.totalPrice = total
     },
     addToCart() {
       alert(`Added to cart:
+        - Drink Type: ${this.selectedDrinkType || 'None'}
         - Shot: ${this.selectedShot ? this.selectedShot.name : 'None'}
         - Extras: ${this.extras.length > 0 ? this.extras.map((e) => e.name).join(', ') : 'None'}
         - Size: ${this.selectedSize ? this.selectedSize.name : 'None'}
-        - Special Instructions: ${this.specialInstructions || 'None'}
+        - Special Instructions: ${this.instructions || 'None'}
         - Total Price: ₱${this.totalPrice}
       `)
-      this.closeModal()
+      // Emit close event to close the modal
+      this.$emit('close')
     },
+  },
+
+  mounted() {
+    document.body.classList.add('modal-open')
+  },
+
+  beforeUnmount() {
+    document.body.classList.remove('modal-open')
   },
 }
 </script>
