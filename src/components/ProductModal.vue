@@ -284,7 +284,7 @@ export default {
 
       // Add shot price if a shot is selected
       if (this.selectedShot) {
-        total += this.selectedSnhot.price
+        total += this.selectedShot.price
       }
 
       // Add size price if a size is selected
@@ -315,11 +315,17 @@ export default {
       this.$emit('close')
     },
   },
-
+  watch: {
+    selectedShot: 'updateTotal',
+    selectedSize: 'updateTotal',
+    extras: {
+      handler: 'updateTotal',
+      deep: true,
+    },
+  },
   mounted() {
     document.body.classList.add('modal-open')
   },
-
   beforeUnmount() {
     document.body.classList.remove('modal-open')
   },
