@@ -47,7 +47,48 @@
   </div>
 </template>
 
-<script></script>
+<script>
+export default {
+  data() {
+    return {
+      currentPassword: '',
+      newPassword: '',
+      confirmPassword: '',
+      errorMessage: '',
+    }
+  },
+  methods: {
+    goToLogin() {
+      // Navigate back to the login page
+      this.$router.push('/login')
+    },
+    resetPassword() {
+      // Clear previous error message
+      this.errorMessage = ''
+
+      // Validate form input
+      if (this.newPassword !== this.confirmPassword) {
+        this.errorMessage = 'New password and confirm password do not match.'
+        return
+      }
+
+      // Check password length (example validation)
+      if (this.newPassword.length < 6) {
+        this.errorMessage = 'New password must be at least 6 characters long.'
+        return
+      }
+
+      // Mock API call or logic to reset the password
+      alert(
+        `Password reset successfully!\n- Current Password: ${this.currentPassword}\n- New Password: ${this.newPassword}`,
+      )
+
+      // Optionally navigate back to the login page
+      this.$router.push('/login')
+    },
+  },
+}
+</script>
 
 <style>
 * {
@@ -70,7 +111,7 @@
 .boxLog {
   width: 100%;
   text-align: left;
-  margin-bottom: 60px;
+  margin-bottom: 80px;
 }
 
 .back-btn {
