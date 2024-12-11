@@ -33,7 +33,7 @@
 
         <div class="forgot">
           <section>
-            <a href="#">Forgot Password or Username?</a>
+            <router-link to="/forget-password">Forgot your Password?</router-link>
           </section>
         </div>
 
