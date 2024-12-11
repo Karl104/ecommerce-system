@@ -64,6 +64,11 @@
           <input type="password" placeholder="Password" v-model="password" />
         </div>
 
+        <p>
+          Create a password 4 to 16 characters long that includes at least 1 uppercase and 1
+          lowercase letter, 1 number.
+        </p>
+
         <button type="submit">Create Account</button>
       </form>
     </section>
@@ -204,6 +209,13 @@
   background-color: rgb(0, 0, 0);
 }
 
+.form p {
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: #666;
+  text-align: center;
+}
+
 .form button:hover {
   background-color: rgb(0, 0, 0);
   color: white;
@@ -222,7 +234,6 @@ export default {
     return {
       fullName: '',
       userName: '',
-      address: '',
       phoneNumber: '',
       birthDate: '',
       gender: '',
@@ -235,18 +246,20 @@ export default {
       if (
         !this.fullName ||
         !this.userName ||
-        !this.address ||
         !this.phoneNumber ||
         !this.birthDate ||
         !this.email ||
         !this.password
       ) {
         alert('Please fill in all the fields')
+      } else if (!this.validatePassword(this.password)) {
+        alert(
+          'Password must be 4 to 16 characters long, include at least 1 uppercase letter, 1 lowercase letter, and 1 number.',
+        )
       } else {
         console.log('Signing up with:', {
           fullName: this.fullName,
           userName: this.userName,
-          address: this.address,
           phoneNumber: this.phoneNumber,
           birthDate: this.birthDate,
           gender: this.gender,
@@ -254,8 +267,12 @@ export default {
           password: this.password,
         })
 
-        // this.goToLogin() //kuan uncomment koni kung naa nay database
+        // this.goToLogin() // Uncomment if database is integrated
       }
+    },
+    validatePassword(password) {
+      const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{4,16}$/
+      return passwordRegex.test(password)
     },
     goToLogin() {
       this.$router.push('/login')
