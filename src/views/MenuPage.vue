@@ -34,7 +34,28 @@
           <h2>Hot Coffee</h2>
           <div class="product-container">
             <div
-              v-for="product in bestProducts"
+              v-for="product in hotCoffees"
+              :key="product.id"
+              class="product-card"
+              @click="openProductModal(product)"
+            >
+              <img :src="product.image" :alt="product.name" />
+              <h3>{{ product.name }}</h3>
+              <div>
+                <p>₱ {{ product.price }}</p>
+                <button>+</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="menu-section">
+        <div class="iced-coffees">
+          <h2>Iced Coffee</h2>
+          <div class="product-container">
+            <div
+              v-for="product in icedCoffees"
               :key="product.id"
               class="product-card"
               @click="openProductModal(product)"
@@ -51,107 +72,182 @@
       </section>
     </div>
   </div>
+
+  <ProductModal v-if="showModal" :product="selectedProduct" @close="closeModal" />
 </template>
 
 <script>
-// import ProductModal from '../components/ProductModal.vue'
+import ProductModal from '../components/ProductModal.vue'
 
-// export default {
-//   components: {
-//     ProductModal,
-//   },
-//   data() {
-//     return {
-//       showModal: false,
-//       selectedProduct: null,
-//       icedNotTodayLatte: {
-//         id: 4,
-//         name: 'Iced Not Today Latte',
-//         price: 190,
-//         image: new URL('@/assets/iced not today latte.jpg', import.meta.url).href,
-//         description: 'Most ordered. Our own signature Spanish latte.',
-//         hasDrinkExtras: true,
-//         hasSize: true,
-//         hasShot: true,
-//         hasSpecialInstructions: true,
-//       },
-//       bestProducts: [
-//         {
-//           id: 1,
-//           name: 'Berry Matcha',
-//           price: 240,
-//           image: new URL('@/assets/berry-matcha.jpg', import.meta.url).href,
-//           description: 'Ceremonial grade matcha latte with strawberry jam',
-//           hasDrinkExtras: false,
-//           hasSize: false,
-//           hasShot: false,
-//           hasSpecialInstructions: true,
-//         },
-//         {
-//           id: 2,
-//           name: 'Espresso Frappe',
-//           price: 200,
-//           image: new URL('@/assets/Espresso-Frappe.jpg', import.meta.url).href,
-//           description: 'Blended espresso with milk.',
-//           hasDrinkExtras: true,
-//           hasSize: false,
-//           hasShot: false,
-//           hasSpecialInstructions: true,
-//         },
-//         {
-//           id: 3,
-//           name: 'Iced Hojicha Latte',
-//           price: 230,
-//           image: new URL('@/assets/Iced-Hojicha-Latte.jpg', import.meta.url).href,
-//           description: 'S grade roasted matcha with milk.',
-//           hasDrinkExtras: true,
-//           hasSize: false,
-//           hasShot: false,
-//           hasSpecialInstructions: true,
-//         },
-//         {
-//           id: 5,
-//           name: 'Iced Orange Americano',
-//           price: 160,
-//           image: new URL('@/assets/iced-orange-americano.jpg', import.meta.url).href,
-//           description: 'Orange juice with double shot of espresso',
-//           hasDrinkExtras: true,
-//           hasSize: true,
-//           hasShot: true,
-//           hasSpecialInstructions: true,
-//         },
-//       ],
-//     }
-//   },
-//   methods: {
-//     goToLogin() {
-//       this.$router.push('/login')
-//     },
-//     goToSignUp() {
-//       this.$router.push('/signup')
-//     },
-//     goToMenu() {
-//       this.$router.push('/menu')
-//     },
-//     openModal() {
-//       this.showModal = true
-//       document.body.classList.add('no-scroll') // Disable scrolling
-//     },
-//     closeModal() {
-//       this.showModal = false
-//       this.selectedProduct = null
-//       document.body.classList.remove('no-scroll') // Re-enable scrolling
-//     },
-//     openProductModal(product) {
-//       this.selectedProduct = product
-//       this.openModal()
-//     },
-//     addToCart(product) {
-//       console.log(`Added ${product.name} to cart`)
-//       // Implement your cart functionality
-//     },
-//   },
-// }
+export default {
+  components: {
+    ProductModal,
+  },
+  data() {
+    return {
+      showModal: false,
+      selectedProduct: null,
+      hotCoffees: [
+        {
+          id: 1,
+          name: 'Hot Not Today Latte',
+          price: 190,
+          image: new URL('@/assets/Hot Not Today Latte.jpg', import.meta.url).href,
+          description: 'Our own signature spanish latte',
+          hasDrinkType: true,
+          hasDrinkExtras: true,
+          hasSize: false,
+          hasShot: true,
+          hasSpecialInstructions: true,
+        },
+        {
+          id: 2,
+          name: 'Hot Americano',
+          price: 150,
+          image: new URL('@/assets/Hot Americano.jpg', import.meta.url).href,
+          description: 'Shot of espresso mixed with water',
+          hasDrinkExtras: true,
+          hasSize: false,
+          hasShot: true,
+          hasSpecialInstructions: true,
+        },
+        {
+          id: 3,
+          name: 'Hot Caramel Latte',
+          price: 190,
+          image: new URL('@/assets/50265348.jpg', import.meta.url).href,
+          description: 'Espresso with steamed milk & house made caramel sauce',
+          hasDrinkExtras: true,
+          hasSize: false,
+          hasShot: true,
+          hasSpecialInstructions: true,
+        },
+        {
+          id: 4,
+          name: 'Hot Latte',
+          price: 180,
+          image: new URL('@/assets/50265348.jpg', import.meta.url).href,
+          description: 'Espresso with steamed milk',
+          hasDrinkExtras: true,
+          hasSize: true,
+          hasShot: true,
+          hasSpecialInstructions: true,
+        },
+        {
+          id: 5,
+          name: 'Cortado',
+          price: 190,
+          image: new URL('@/assets/Cortado.jpg', import.meta.url).href,
+          description: 'Doubleshot of espresso with milk. 1:1 ratio',
+          hasDrinkType: true,
+          hasDrinkExtras: true,
+          hasSize: false,
+          hasShot: true,
+          hasSpecialInstructions: true,
+        },
+      ],
+
+      icedCoffees: [
+        {
+          id: 1,
+          name: 'Iced Not Today Latte',
+          price: 190,
+          image: new URL('@/assets/iced not today latte.jpg', import.meta.url).href,
+          description: 'Most ordered. Our own signature Spanish latte.',
+          hasDrinkExtras: true,
+          hasSize: true,
+          hasShot: true,
+          hasSpecialInstructions: true,
+        },
+        {
+          id: 2,
+          name: 'Iced Affogato Latte',
+          price: 210,
+          image: new URL('@/assets/Iced Affogato Latte.jpg', import.meta.url).href,
+          description: 'Espresso with milk & vanilla ice cream on top',
+          hasDrinkExtras: true,
+          hasSize: true,
+          hasShot: true,
+          hasSpecialInstructions: true,
+        },
+        {
+          id: 3,
+          name: 'Iced Shaken Espresso',
+          price: 250,
+          image: new URL('@/assets/Iced Shaken Espresso.png', import.meta.url).href,
+          description: 'Espresso with brown sugar, oat milk & cinnamon',
+          hasDrinkExtras: true,
+          hasSize: true,
+          hasShot: true,
+          hasSpecialInstructions: true,
+        },
+        {
+          id: 4,
+          name: 'Iced Hojicha Latte',
+          price: 230,
+          image: new URL('@/assets/Iced-Hojicha-Latte.jpg', import.meta.url).href,
+          description: 'S grade roasted matcha with milk.',
+          hasDrinkExtras: true,
+          hasSize: false,
+          hasShot: false,
+          hasSpecialInstructions: true,
+        },
+        {
+          id: 5,
+          name: 'Iced Orange Americano',
+          price: 160,
+          image: new URL('@/assets/iced-orange-americano.jpg', import.meta.url).href,
+          description: 'Orange juice with double shot of espresso',
+          hasDrinkExtras: true,
+          hasSize: true,
+          hasShot: true,
+          hasSpecialInstructions: true,
+        },
+
+        {
+          id: 6,
+          name: 'Einspanner',
+          price: 230,
+          image: new URL('@/assets/Einspanner.jpg', import.meta.url).href,
+          description: 'Strong & creamy',
+          hasDrinkExtras: true,
+          hasDrinkType: true,
+          hasSize: false,
+          hasShot: true,
+          hasSpecialInstructions: true,
+        },
+      ],
+    }
+  },
+  methods: {
+    goToLogin() {
+      this.$router.push('/login')
+    },
+    goToSignUp() {
+      this.$router.push('/signup')
+    },
+    goToMenu() {
+      this.$router.push('/menu')
+    },
+    openModal() {
+      this.showModal = true
+      document.body.classList.add('no-scroll')
+    },
+    closeModal() {
+      this.showModal = false
+      this.selectedProduct = null
+      document.body.classList.remove('no-scroll')
+    },
+    openProductModal(product) {
+      this.selectedProduct = product
+      this.openModal()
+    },
+    addToCart(product) {
+      console.log(`Added ${product.name} to cart`)
+      // Implement your cart functionality
+    },
+  },
+}
 </script>
 
 <style>
@@ -297,6 +393,23 @@ li {
 }
 
 .hot-coffees h2 {
+  font-size: 2.5rem;
+  font-family: 'Kanit';
+  color: #000000;
+  margin: 0;
+  padding: 20px 0;
+  text-align: center;
+}
+
+.iced-coffees {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+}
+
+.iced-coffees h2 {
   font-size: 2.5rem;
   font-family: 'Kanit';
   color: #000000;
