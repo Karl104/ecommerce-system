@@ -16,10 +16,10 @@
           <input type="text" placeholder="Enter your User Name" v-model="userName" />
         </div>
 
-        <div class="input-box">
+        <!-- <div class="input-box">
           <label>Address</label>
           <input type="text" placeholder="Enter your Address" v-model="address" />
-        </div>
+        </div> -->
 
         <div class="column">
           <div class="input-box">
