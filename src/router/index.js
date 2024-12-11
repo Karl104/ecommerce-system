@@ -3,6 +3,7 @@ import Home from '../views/HomePage.vue'
 import LoginPage from '../views/LoginPage.vue'
 import SignUp from '../components/SignUp.vue'
 import MenuPage from '../views/MenuPage.vue'
+import forgetPass from '../components/forgetPass.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -28,6 +29,12 @@ const router = createRouter({
       path: '/menu',
       name: 'menu',
       component: MenuPage,
+    },
+
+    {
+      path: '/forget-password',
+      name: 'forget-password',
+      component: forgetPass,
     },
   ],
 })
