@@ -10,8 +10,9 @@
           <!-- <span><strong>The not Today Cafe</strong></span> -->
 
           <ul class="navbar">
-            <li><a href="#">Menu</a></li>
+            <li><router-link to="/menu">Menu</router-link></li>
             <li><a href="#about">About</a></li>
+            <li><a href="#">Member+</a></li>
           </ul>
         </div>
 
@@ -34,14 +35,11 @@
       <section class="home-section">
         <div class="home-text">
           <h1>Beat the Laziness with Our Signature Iced Spanish Latte</h1>
-          <p>
-            Our signature Spanish Latte. The ultimate iced coffee to beat the "Not Today" blues and
-            energize your day.
-          </p>
-          <button class="home-order" @click="openModal">Buy Now</button>
+          <p>The ultimate iced coffee to beat the "Not Today" blues and energize your day.</p>
+          <button class="home-order" @click="openProductModal(icedNotTodayLatte)">Buy Now</button>
         </div>
         <div class="home-image-wrapper">
-          <img src="../assets/heyy.png" alt="iced not today" class="home-image" />
+          <img src="../assets/heyy.png" alt="Iced Not Today" class="home-image" />
         </div>
       </section>
 
@@ -60,25 +58,100 @@
           </p>
         </div>
       </section>
-      <section id="menu" class="menu-section">
+      <section class="menu-section">
         <div class="best-product">
-          <h1>Best Selling Products</h1>
+          <h2>Best Selling Products</h2>
           <div class="product-container">
-            <div class="product-card">
-              <img src="../assets/berry-matcha.jpg" alt="berry-matcha" />
-              <h4>Berry Matcha</h4>
+            <div
+              v-for="product in bestProducts"
+              :key="product.id"
+              class="product-card"
+              @click="openProductModal(product)"
+            >
+              <img :src="product.image" :alt="product.name" />
+              <h3>{{ product.name }}</h3>
               <div>
-                <span> ₱ 240</span>
+                <p>₱ {{ product.price }}</p>
                 <button>+</button>
               </div>
             </div>
-            <div class="product-card">
-              <img src="../assets/Espresso-Frappe.jpg" alt="espresso-frappe" />
-              <h4>Espresso Frappe</h4>
-              <div>
-                <span> ₱ 200</span>
-                <button>+</button>
+          </div>
+          <button class="view-btn" @click="goToMenu">
+            View More <i class="bx bx-arrow-back bx-rotate-180"></i>
+          </button>
+        </div>
+      </section>
+
+      <section class="rating-section">
+        <h1>Ratings</h1>
+        <div class="rating-all">
+          <div class="rating-container">
+            <div class="ratings">
+              <div class="user">
+                <img src="../assets/noze.jpg" alt="" />
+                <div class="user-info">
+                  <h3>Noze</h3>
+                  <div class="stars">
+                    <i class="bx bxs-star"></i>
+                    <i class="bx bxs-star"></i>
+                    <i class="bx bxs-star"></i>
+                    <i class="bx bxs-star-half"></i>
+                    <i class="bx bx-star"></i>
+                  </div>
+                </div>
               </div>
+              <p class="text">
+                The ambiance is cozy and inviting, making it the perfect spot to catch up with
+                friends or work on your laptop. Overall, this coffee shop should be on everyone's
+                must-visit list.
+              </p>
+            </div>
+          </div>
+
+          <div class="rating-container">
+            <div class="ratings">
+              <div class="user">
+                <img src="../assets/avatar.jpg" alt="" />
+                <div class="user-info">
+                  <h3>John Doe</h3>
+                  <div class="member">
+                    <h4>Member+</h4>
+                  </div>
+                  <div class="stars-member">
+                    <i class="bx bxs-star"></i>
+                    <i class="bx bxs-star"></i>
+                    <i class="bx bxs-star"></i>
+                    <i class="bx bxs-star"></i>
+                    <i class="bx bxs-star"></i>
+                  </div>
+                </div>
+              </div>
+              <p class="text">
+                My order always arrives on time, and the coffee is consistently great. Love how
+                simple and efficient the whole system is—highly recommend!
+              </p>
+            </div>
+          </div>
+
+          <div class="rating-container">
+            <div class="ratings">
+              <div class="user">
+                <img src="../assets/sophia.jpg" alt="" />
+                <div class="user-info">
+                  <h3>Pyang</h3>
+                  <div class="member">
+                    <h4>Member+</h4>
+                  </div>
+                  <div class="stars-member">
+                    <i class="bx bxs-star"></i>
+                    <i class="bx bxs-star"></i>
+                    <i class="bx bxs-star"></i>
+                    <i class="bx bxs-star"></i>
+                    <i class="bx bxs-star"></i>
+                  </div>
+                </div>
+              </div>
+              <p class="text">Best Coffee Shop ever! Highly Recommend</p>
             </div>
           </div>
         </div>
@@ -86,8 +159,109 @@
     </div>
   </div>
 
-  <ProductModal v-if="showModal" @close="closeModal" />
+  <ProductModal v-if="showModal" :product="selectedProduct" @close="closeModal" />
 </template>
+
+<script>
+import ProductModal from '../components/ProductModal.vue'
+
+export default {
+  components: {
+    ProductModal,
+  },
+  data() {
+    return {
+      showModal: false,
+      selectedProduct: null,
+      icedNotTodayLatte: {
+        id: 4,
+        name: 'Iced Not Today Latte',
+        price: 190,
+        image: new URL('@/assets/iced not today latte.jpg', import.meta.url).href,
+        description: 'Most ordered. Our own signature Spanish latte.',
+        hasDrinkExtras: true,
+        hasSize: true,
+        hasShot: true,
+        hasSpecialInstructions: true,
+      },
+      bestProducts: [
+        {
+          id: 1,
+          name: 'Berry Matcha',
+          price: 240,
+          image: new URL('@/assets/berry-matcha.jpg', import.meta.url).href,
+          description: 'Ceremonial grade matcha latte with strawberry jam',
+          hasDrinkExtras: false,
+          hasSize: false,
+          hasShot: false,
+          hasSpecialInstructions: true,
+        },
+        {
+          id: 2,
+          name: 'Espresso Frappe',
+          price: 200,
+          image: new URL('@/assets/Espresso-Frappe.jpg', import.meta.url).href,
+          description: 'Blended espresso with milk.',
+          hasDrinkExtras: true,
+          hasSize: false,
+          hasShot: false,
+          hasSpecialInstructions: true,
+        },
+        {
+          id: 3,
+          name: 'Iced Hojicha Latte',
+          price: 230,
+          image: new URL('@/assets/Iced-Hojicha-Latte.jpg', import.meta.url).href,
+          description: 'S grade roasted matcha with milk.',
+          hasDrinkExtras: true,
+          hasSize: false,
+          hasShot: false,
+          hasSpecialInstructions: true,
+        },
+        {
+          id: 5,
+          name: 'Iced Orange Americano',
+          price: 160,
+          image: new URL('@/assets/iced-orange-americano.jpg', import.meta.url).href,
+          description: 'Orange juice with double shot of espresso',
+          hasDrinkExtras: true,
+          hasSize: true,
+          hasShot: true,
+          hasSpecialInstructions: true,
+        },
+      ],
+    }
+  },
+  methods: {
+    goToLogin() {
+      this.$router.push('/login')
+    },
+    goToSignUp() {
+      this.$router.push('/signup')
+    },
+    goToMenu() {
+      this.$router.push('/menu')
+    },
+    openModal() {
+      this.showModal = true
+      document.body.classList.add('no-scroll') // Disable scrolling
+    },
+    closeModal() {
+      this.showModal = false
+      this.selectedProduct = null
+      document.body.classList.remove('no-scroll') // Re-enable scrolling
+    },
+    openProductModal(product) {
+      this.selectedProduct = product
+      this.openModal()
+    },
+    addToCart(product) {
+      console.log(`Added ${product.name} to cart`)
+      // Implement your cart functionality
+    },
+  },
+}
+</script>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
@@ -101,6 +275,11 @@
   text-decoration: none;
   list-style: none;
   font-family: 'Kanit', sans-serif;
+  overflow-x: hidden;
+}
+
+.no-scroll {
+  overflow: hidden;
 }
 
 :root {
@@ -330,10 +509,10 @@ li {
   align-items: center;
   justify-content: flex-start;
   width: 100vw;
-  height: 90vh;
-  background-color: #deffe1;
+  height: auto;
+  background-color: #c3ffc8;
   margin-top: 100px;
-  min-height: 90vh;
+  min-height: 80vh;
 }
 
 .best-product {
@@ -344,8 +523,28 @@ li {
   width: 100%;
 }
 
-.best-product h1 {
-  font-size: 3rem;
+.view-btn {
+  background-color: transparent;
+  border: 2px solid black;
+  color: black;
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.view-btn:hover {
+  background-color: black;
+  color: white;
+}
+
+.best-product h2 {
+  font-size: 2.5rem;
   font-family: 'Kanit';
   color: #000000;
   margin: 0;
@@ -369,6 +568,14 @@ li {
   box-shadow: 0 5px 5px #000000;
   font-family: Arial, Helvetica, sans-serif;
   cursor: pointer;
+  border-radius: 8px;
+  transition:
+    background-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.product-card:hover {
+  background-color: lightgray;
 }
 
 .product-card img {
@@ -376,8 +583,8 @@ li {
   border-radius: 8px;
 }
 
-.product-card h4 {
-  font-size: 1.3rem;
+.product-card h3 {
+  font-size: 1.2rem;
   margin: 0.5rem 0;
   font-weight: bold;
 }
@@ -387,6 +594,12 @@ li {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.product-card p {
+  font-size: 1rem;
+  color: #000000;
+  margin-bottom: 1rem;
 }
 
 .product-card button {
@@ -402,47 +615,102 @@ li {
   align-items: center;
 }
 
-.product-card:hover {
+.product-card button:hover {
   color: #fff;
-  background-color: lightslategray;
+  background-color: rgb(179, 179, 179);
 }
 
 .product-card:hover button {
   color: #000;
   background-color: #fff;
 }
-</style>
 
-<script>
-import ProductModal from '../components/ProductModal.vue'
-
-export default {
-  components: {
-    ProductModal,
-  },
-  data() {
-    return {
-      showModal: false,
-    }
-  },
-  methods: {
-    goToLogin() {
-      this.$router.push('/login')
-      console.log('Navigating to login page')
-    },
-    goToSignUp() {
-      this.$router.push('/signup')
-      console.log('Navigating to signup page')
-    },
-
-    openModal() {
-      this.showModal = true
-      console.log('Modal opened:', this.showModal)
-    },
-    closeModal() {
-      this.showModal = false
-      console.log('Modal closed:', this.showModal)
-    },
-  },
+.rating-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 75px;
+  width: 100%;
+  height: auto;
+  background-color: #edffff;
+  min-height: 70px;
+  justify-content: center;
+  margin-top: 100px;
+  min-height: 90vh;
 }
-</script>
+
+.rating-all {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 15px;
+}
+
+.rating-section h1 {
+  font-size: 4rem;
+  font-family: 'Kanit';
+  color: #000000;
+  margin: 0;
+  padding: 0 0 20px 0;
+  padding-bottom: 85px;
+  text-align: center;
+  width: 100%;
+}
+
+.rating-container {
+  position: relative;
+  perspective: 1000px;
+}
+
+.rating-container .ratings {
+  border-radius: 5px;
+  background: #fff;
+  box-shadow: 0 5px 10px #3337;
+  padding: 20px;
+  width: 450px;
+  margin: 10px;
+  position: relative;
+}
+
+.rating-container .ratings img {
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 10px;
+}
+
+.rating-container .ratings .user {
+  display: flex;
+  align-items: center;
+}
+
+.rating-container .ratings .user .user-info h3 {
+  color: #333;
+  font-size: 20px;
+}
+
+.rating-container .ratings .user .user-info .member h4 {
+  color: #b637ff;
+  font-size: 13px;
+}
+
+.rating-container .ratings .user .user-info .stars {
+  color: #000000;
+  font-size: 15px;
+}
+
+.rating-container .ratings .user .user-info .stars-member {
+  color: #000000;
+  font-size: 15px;
+  margin-top: 10px;
+}
+
+.rating-container .ratings .text {
+  color: #333;
+  font-size: 14px;
+  padding-top: 15px;
+  font-style: italic;
+  /* text-transform: capitalize; */
+}
+</style>
