@@ -78,6 +78,12 @@
 
         <!-- Modal Footer -->
         <div class="modal-footer">
+          <div class="quantity-selector">
+            <button @click="decrementQuantity" :disabled="quantity <= 1">-</button>
+            <span>{{ quantity }}</span>
+            <button @click="incrementQuantity">+</button>
+          </div>
+
           <div class="total-price">Total: ₱{{ totalPrice }}</div>
           <button
             class="add-to-cart"
@@ -203,8 +209,30 @@ textarea {
 
 .modal-footer {
   padding: 20px 0;
-  border-radius: 1px solid #ddd;
-  background-color: #f9f9f9;
+  border-radius: 1px solid #ffffff;
+  background-color: #ffffff;
+  text-align: center;
+}
+
+.quantity-selector {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.quantity-selector button {
+  width: 30px;
+  height: 30px;
+  font-size: 18px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f8f8f8;
+  cursor: pointer;
+}
+
+.quantity-selector span {
+  font-size: 18px;
+  min-width: 30px;
   text-align: center;
 }
 
@@ -246,6 +274,7 @@ export default {
     return {
       basePrice: this.product.price || 0,
       totalPrice: this.product.price || 0,
+      quantity: 1,
       selectedShot: null,
       extras: [],
       selectedSize: null,
@@ -274,8 +303,12 @@ export default {
   },
   computed: {
     canAddToCart() {
+      // Check if Drink Type is selected
+      const hasDrinkType = this.product.hasDrinkType ? this.selectedDrinkType !== null : true
+      // Check if Shot is selected
       const hasRequiredShot = this.product.hasShot ? this.selectedShot !== null : true
-      return hasRequiredShot
+      // Return true only if both required options are selected
+      return hasDrinkType && hasRequiredShot
     },
   },
   methods: {
@@ -299,18 +332,55 @@ export default {
         })
       }
 
-      // Update the total price
-      this.totalPrice = total
+      // Multiply by quantity
+      this.totalPrice = total * this.quantity
+    },
+    incrementQuantity() {
+      this.quantity++
+      this.updateTotal()
+    },
+    decrementQuantity() {
+      if (this.quantity > 1) {
+        this.quantity--
+        this.updateTotal()
+      }
     },
     addToCart() {
-      alert(`Added to cart:
-        - Drink Type: ${this.selectedDrinkType || 'None'}
-        - Shot: ${this.selectedShot ? this.selectedShot.name : 'None'}
-        - Extras: ${this.extras.length > 0 ? this.extras.map((e) => e.name).join(', ') : 'None'}
-        - Size: ${this.selectedSize ? this.selectedSize.name : 'None'}
-        - Special Instructions: ${this.instructions || 'None'}
-        - Total Price: ₱${this.totalPrice}
-      `)
+      const cartSummary = [`Quantity: ${this.quantity}`]
+
+      // Conditionally add Drink Type
+      if (this.product.hasDrinkType) {
+        cartSummary.push(`Drink Type: ${this.selectedDrinkType || 'None'}`)
+      }
+
+      // Conditionally add Shot
+      if (this.product.hasShot) {
+        cartSummary.push(`Shot: ${this.selectedShot ? this.selectedShot.name : 'None'}`)
+      }
+
+      // Conditionally add Extras
+      if (this.product.hasDrinkExtras) {
+        cartSummary.push(
+          `Extras: ${this.extras.length > 0 ? this.extras.map((e) => e.name).join(', ') : 'None'}`,
+        )
+      }
+
+      // Conditionally add Size
+      if (this.product.hasSize) {
+        cartSummary.push(`Size: ${this.selectedSize ? this.selectedSize.name : 'None'}`)
+      }
+
+      // Conditionally add Special Instructions
+      if (this.product.hasSpecialInstructions) {
+        cartSummary.push(`Special Instructions: ${this.instructions || 'None'}`)
+      }
+
+      // Add Total Price
+      cartSummary.push(`Total Price: ₱${this.totalPrice}`)
+
+      // Show alert with cart summary
+      alert(`Added to cart:\n${cartSummary.join('\n')}`)
+
       // Emit close event to close the modal
       this.$emit('close')
     },
