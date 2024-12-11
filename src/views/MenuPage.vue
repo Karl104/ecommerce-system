@@ -70,6 +70,69 @@
           </div>
         </div>
       </section>
+
+      <section class="menu-section">
+        <div class="brunch">
+          <h2>Brunch & Pasta</h2>
+          <div class="product-container">
+            <div
+              v-for="product in brunches"
+              :key="product.id"
+              class="product-card"
+              @click="openProductModal(product)"
+            >
+              <img :src="product.image" :alt="product.name" />
+              <h3>{{ product.name }}</h3>
+              <div>
+                <p>₱ {{ product.price }}</p>
+                <button>+</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="menu-section">
+        <div class="frappe">
+          <h2>Frappe</h2>
+          <div class="product-container">
+            <div
+              v-for="product in frappe"
+              :key="product.id"
+              class="product-card"
+              @click="openProductModal(product)"
+            >
+              <img :src="product.image" :alt="product.name" />
+              <h3>{{ product.name }}</h3>
+              <div>
+                <p>₱ {{ product.price }}</p>
+                <button>+</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="menu-section">
+        <div class="tea">
+          <h2>Teas</h2>
+          <div class="product-container">
+            <div
+              v-for="product in tea"
+              :key="product.id"
+              class="product-card"
+              @click="openProductModal(product)"
+            >
+              <img :src="product.image" :alt="product.name" />
+              <h3>{{ product.name }}</h3>
+              <div>
+                <p>₱ {{ product.price }}</p>
+                <button>+</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   </div>
 
@@ -96,7 +159,6 @@ export default {
           description: 'Our own signature spanish latte',
           hasDrinkType: true,
           hasDrinkExtras: true,
-          hasSize: false,
           hasShot: true,
           hasSpecialInstructions: true,
         },
@@ -107,7 +169,6 @@ export default {
           image: new URL('@/assets/Hot Americano.jpg', import.meta.url).href,
           description: 'Shot of espresso mixed with water',
           hasDrinkExtras: true,
-          hasSize: false,
           hasShot: true,
           hasSpecialInstructions: true,
         },
@@ -118,7 +179,6 @@ export default {
           image: new URL('@/assets/50265348.jpg', import.meta.url).href,
           description: 'Espresso with steamed milk & house made caramel sauce',
           hasDrinkExtras: true,
-          hasSize: false,
           hasShot: true,
           hasSpecialInstructions: true,
         },
@@ -141,7 +201,6 @@ export default {
           description: 'Doubleshot of espresso with milk. 1:1 ratio',
           hasDrinkType: true,
           hasDrinkExtras: true,
-          hasSize: false,
           hasShot: true,
           hasSpecialInstructions: true,
         },
@@ -188,8 +247,6 @@ export default {
           image: new URL('@/assets/Iced-Hojicha-Latte.jpg', import.meta.url).href,
           description: 'S grade roasted matcha with milk.',
           hasDrinkExtras: true,
-          hasSize: false,
-          hasShot: false,
           hasSpecialInstructions: true,
         },
         {
@@ -212,8 +269,163 @@ export default {
           description: 'Strong & creamy',
           hasDrinkExtras: true,
           hasDrinkType: true,
-          hasSize: false,
           hasShot: true,
+          hasSpecialInstructions: true,
+        },
+      ],
+
+      brunches: [
+        {
+          id: 1,
+          name: 'Beef Salpicao',
+          price: 240,
+          image: new URL('@/assets/Beef Salpicao.jpg', import.meta.url).href,
+          description:
+            'For reference only: Savor the tender and flavorful Beef Salpicao, a satisfying meaty dish.',
+          hasSpecialInstructions: true,
+        },
+        {
+          id: 2,
+          name: 'Bacon & Eggs',
+          price: 210,
+          image: new URL('@/assets/Bacon-Eggs.jpg', import.meta.url).href,
+          description: 'For reference: Classic bacon and eggs breakfast.',
+          hasSpecialInstructions: true,
+        },
+        {
+          id: 3,
+          name: 'Carbonara',
+          price: 360,
+          image: new URL('@/assets/Carbonara.jpg', import.meta.url).href,
+          description:
+            'Spaghetti pasta with bacon & a creamy sauce made from eggs, parmesan & black pepper',
+          hasSpecialInstructions: true,
+        },
+        {
+          id: 4,
+          name: 'Omelette',
+          price: 150,
+          image: new URL('@/assets/Omelette.jpg', import.meta.url).href,
+          description: 'For reference: A classic omelette.',
+          hasSpecialInstructions: true,
+        },
+        {
+          id: 5,
+          name: 'Tuna Pesto',
+          price: 340,
+          image: new URL('@/assets/Tuna Pesto.jpg', import.meta.url).href,
+          description:
+            'A surprisingly delicious dinner made from pesto, pasta, onion & canned tuna in olive oil',
+          hasSpecialInstructions: true,
+        },
+
+        {
+          id: 6,
+          name: 'Pork Tocino',
+          price: 170,
+          image: new URL('@/assets/Pork Tocino.jpg', import.meta.url).href,
+          description:
+            'Delight in the mouthwatering goodness of this Pork Tocino, a perfect blend of sweet and savory flavors.',
+          hasSpecialInstructions: true,
+        },
+      ],
+
+      frappe: [
+        {
+          id: 1,
+          name: 'Vanilla Bean Frappe',
+          price: 200,
+          image: new URL('@/assets/Vanilla Bean Frappe.jpg', import.meta.url).href,
+          description: 'Blended vanilla ice cream and vanilla syrup',
+          hasSpecialInstructions: true,
+          hasDrinkExtras: true,
+        },
+        {
+          id: 2,
+          name: 'Matcha Cream Frappe',
+          price: 200,
+          image: new URL('@/assets/Matcha Cream Frappe.jpg', import.meta.url).href,
+          description: 'For reference: Classic bacon and eggs breakfast.',
+          hasSpecialInstructions: true,
+          hasDrinkExtras: true,
+        },
+        {
+          id: 3,
+          name: 'Espresso Frappe',
+          price: 200,
+          image: new URL('@/assets/Espresso-Frappe.jpg', import.meta.url).href,
+          description: 'Blended espresso with milk.',
+          hasDrinkExtras: true,
+          hasSpecialInstructions: true,
+        },
+        {
+          id: 4,
+          name: 'Dark Chocolate Frappe',
+          price: 200,
+          image: new URL('@/assets/frappe.jpg', import.meta.url).href,
+          description: 'Blended dark chocolate.',
+          hasSpecialInstructions: true,
+          hasDrinkExtras: true,
+        },
+      ],
+
+      tea: [
+        {
+          id: 1,
+          name: 'English Breakfast Tea',
+          price: 140,
+          image: new URL('@/assets/English Breakfast Tea.jpg', import.meta.url).href,
+          description:
+            'A black tea that boasts a full body with rich undertones and hints of malty, bitter, and mildly sweet notes.',
+          hasDrinkType: true,
+          hasSpecialInstructions: true,
+        },
+        {
+          id: 2,
+          name: 'Signature Tea',
+          price: 140,
+          image: new URL('@/assets/Earl Grey Tea.jpg', import.meta.url).href,
+          description: 'Our specialty blend of tea. Earl grey tea with hibiscus.',
+          hasDrinkType: true,
+          hasSpecialInstructions: true,
+        },
+        {
+          id: 3,
+          name: 'Chamomile Tea',
+          price: 140,
+          image: new URL('@/assets/Chamomile Tea.jpg', import.meta.url).href,
+          description: 'Chamomile has gentle apple notes and a honey-like sweetness.',
+          hasDrinkType: true,
+          hasSpecialInstructions: true,
+        },
+        {
+          id: 4,
+          name: 'Green Tea With Jasmine',
+          price: 140,
+          image: new URL('@/assets/Green Tea With Jasmine.jpg', import.meta.url).href,
+          description:
+            'Green tea has a light, delicate taste with fresh, vegetal and grassy notes. Its flavor can vary from sweet and smooth to slightly bitter and astringent.',
+          hasDrinkType: true,
+          hasSpecialInstructions: true,
+        },
+        {
+          id: 5,
+          name: 'Peppermint Tea',
+          price: 140,
+          image: new URL('@/assets/Peppermint Tea.jpg', import.meta.url).href,
+          description:
+            'For reference only: Fragrant tea infused with peppermint leaves, soothing and aromatic.',
+          hasDrinkType: true,
+          hasSpecialInstructions: true,
+        },
+
+        {
+          id: 6,
+          name: 'Fresh Honey & Ginger Tea',
+          price: 220,
+          image: new URL('@/assets/Fresh Honey & Ginger Tea.jpg', import.meta.url).href,
+          description: 'Freshly crushed ginger mixed with lemon juice & honey.',
+          hasDrinkType: true,
           hasSpecialInstructions: true,
         },
       ],
@@ -410,6 +622,57 @@ li {
 }
 
 .iced-coffees h2 {
+  font-size: 2.5rem;
+  font-family: 'Kanit';
+  color: #000000;
+  margin: 0;
+  padding: 20px 0;
+  text-align: center;
+}
+
+.brunch {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+}
+
+.brunch h2 {
+  font-size: 2.5rem;
+  font-family: 'Kanit';
+  color: #000000;
+  margin: 0;
+  padding: 20px 0;
+  text-align: center;
+}
+
+.frappe {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+}
+
+.frappe h2 {
+  font-size: 2.5rem;
+  font-family: 'Kanit';
+  color: #000000;
+  margin: 0;
+  padding: 20px 0;
+  text-align: center;
+}
+
+.tea {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+}
+
+.tea h2 {
   font-size: 2.5rem;
   font-family: 'Kanit';
   color: #000000;
