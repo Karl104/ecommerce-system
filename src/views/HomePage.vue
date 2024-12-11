@@ -191,9 +191,6 @@ export default {
           price: 240,
           image: new URL('@/assets/berry-matcha.jpg', import.meta.url).href,
           description: 'Ceremonial grade matcha latte with strawberry jam',
-          hasDrinkExtras: false,
-          hasSize: false,
-          hasShot: false,
           hasSpecialInstructions: true,
         },
         {
@@ -203,8 +200,6 @@ export default {
           image: new URL('@/assets/Espresso-Frappe.jpg', import.meta.url).href,
           description: 'Blended espresso with milk.',
           hasDrinkExtras: true,
-          hasSize: false,
-          hasShot: false,
           hasSpecialInstructions: true,
         },
         {
@@ -214,8 +209,6 @@ export default {
           image: new URL('@/assets/Iced-Hojicha-Latte.jpg', import.meta.url).href,
           description: 'S grade roasted matcha with milk.',
           hasDrinkExtras: true,
-          hasSize: false,
-          hasShot: false,
           hasSpecialInstructions: true,
         },
         {
