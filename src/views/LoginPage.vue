@@ -57,35 +57,31 @@ export default {
     return {
       userName: '',
       password: '',
-      adminCredentials: {
-        username: 'admin',
-        password: '1234',
-      },
     }
   },
   methods: {
     handleLogin() {
-      // Check for empty fields
-      if (!this.userName && !this.password) {
-        alert('Both fields are required.')
-        return
-      } else if (!this.userName) {
-        alert('Please enter your username.')
-        return
-      } else if (!this.password) {
-        alert('Please enter your password.')
+      // Validate input fields
+      if (!this.userName || !this.password) {
+        alert('Both username and password are required.')
         return
       }
 
-      // mo validate ang admin credentials
-      if (
-        this.userName === this.adminCredentials.username &&
-        this.password === this.adminCredentials.password
-      ) {
-        alert('Welcome, Admin!')
-        // Redirect to the admin dashboard or another route
-        this.$router.push('/admin-dashboard') // Replace with your admin route
+      // Retrieve existing users from localStorage
+      const existingUsers = JSON.parse(localStorage.getItem('users')) || []
+
+      // Find the user in the stored users array
+      const loggedInUser = existingUsers.find(
+        (user) => user.userName === this.userName && user.password === this.password,
+      )
+
+      if (loggedInUser) {
+        // Login successful
+        alert('Login successful!')
+        localStorage.setItem('currentUser', JSON.stringify(loggedInUser)) // Save logged-in user
+        this.$router.push('/') // Redirect to the homepage
       } else {
+        // Login failed
         alert('Invalid username or password.')
       }
     },

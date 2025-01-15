@@ -2,33 +2,79 @@
   <div class="all">
     <div class="body-home">
       <header class="header-home">
+        <!-- Logo and Navigation -->
         <div class="head">
           <a href="#" class="logo">
-            <img src="../assets/logo-lazy.png" alt=" logo" class="logo" />
+            <img src="../assets/logo-lazy.png" alt="logo" class="logo" />
           </a>
-
-          <!-- <span><strong>The not Today Cafe</strong></span> -->
 
           <ul class="navbar">
             <li><router-link to="/menu">Menu</router-link></li>
             <li><a href="#about">About</a></li>
-            <li><a href="#">Member+</a></li>
+            <li><a href="#" @click="handleMemberClick">Member+</a></li>
           </ul>
         </div>
 
+        <!-- Main Right Section -->
         <div class="main">
-          <!-- <a href="#" class="user" @click="goToLogin">Sign In</a> -->
-          <button class="signIn" @click="goToLogin">Sign In</button>
-          <button class="signUp" @click="goToSignUp">Sign Up</button>
-
-          <a href="#" class="icon">
+          <!-- Cart Icon -->
+          <a href="#" class="icon cart">
             <img src="../assets/cart.png" alt="cart" />
           </a>
 
-          <input type="checkbox" id="check" />
-          <label for="check" class="checkbtn">
-            <img src="../assets/menu.png" alt="menu" style="width: 30px" />
-          </label>
+          <!-- Profile Icon -->
+          <span class="navigation__group">
+            <img
+              class="profile"
+              src="../assets/avatar.jpg"
+              alt="User Picture"
+              @click="toggleDropdown"
+              ref="profile"
+            />
+          </span>
+
+          <!-- Dropdown -->
+          <div
+            class="dropdown__wrapper"
+            :class="{ hide: dropdownHidden, 'dropdown__wrapper--fade-in': !dropdownHidden }"
+            ref="dropdown"
+          >
+            <!-- User Name -->
+            <div class="dropdown__group">
+              <div class="user-name">
+                {{ userName || 'Guest' }}
+              </div>
+            </div>
+            <hr class="divider" />
+
+            <nav>
+              <ul>
+                <li>
+                  <img src="../assets/user.png" alt="Profile" />
+                  <a href="#" @click.prevent="goToProfile">Profile</a>
+                </li>
+                <hr class="divider" />
+                <li v-if="!isGuest">
+                  <img src="../assets/settings.svg" alt="Settings" />
+                  <router-link to="/orders">Orders</router-link>
+                </li>
+              </ul>
+              <hr class="divider" />
+              <ul>
+                <li>
+                  <img src="../assets/premium.svg" alt="Premium" />
+                  <a href="#" @click="handleMemberClick">Member+</a>
+                </li>
+                <hr class="divider" />
+                <li style="color: #e3452f">
+                  <img src="../assets/logout.svg" alt="Log Out" v-if="!isGuest" />
+                  <a href="#" @click.prevent="isGuest ? goToLogin() : signOut()">
+                    {{ isGuest ? 'Sign In' : 'Log Out' }}
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
         </div>
       </header>
 
@@ -173,6 +219,8 @@ export default {
     return {
       showModal: false,
       selectedProduct: null,
+      dropdownHidden: true,
+      userName: '', // Holds the logged-in user's name
       icedNotTodayLatte: {
         id: 4,
         name: 'Iced Not Today Latte',
@@ -225,9 +273,53 @@ export default {
       ],
     }
   },
+  computed: {
+    isGuest() {
+      return !this.userName // Determines if the user is a guest
+    },
+  },
+  mounted() {
+    // Fetch user information from localStorage after login or account creation
+    const loggedInUser = JSON.parse(localStorage.getItem('currentUser')) || null
+    if (loggedInUser && loggedInUser.userName) {
+      this.userName = loggedInUser.userName // Use userName from logged-in user
+    }
+    document.addEventListener('click', this.handleOutsideClick)
+  },
+  beforeUnmount() {
+    document.removeEventListener('click', this.handleOutsideClick)
+  },
   methods: {
+    toggleDropdown() {
+      this.dropdownHidden = !this.dropdownHidden
+    },
+    handleOutsideClick(event) {
+      const dropdownElement = this.$refs.dropdown
+      const profileElement = this.$refs.profile
+      if (
+        dropdownElement &&
+        !dropdownElement.contains(event.target) &&
+        profileElement &&
+        !profileElement.contains(event.target)
+      ) {
+        this.dropdownHidden = true
+      }
+    },
     goToLogin() {
       this.$router.push('/login')
+    },
+    goToProfile() {
+      if (this.isGuest) {
+        this.goToLogin()
+      } else {
+        this.$router.push('/profile')
+      }
+    },
+    signOut() {
+      localStorage.removeItem('currentUser') // Remove user data
+      this.userName = '' // Reset userName
+      alert('You have been signed out.')
+      this.$router.push('/') // Redirect to the homepage
     },
     goToSignUp() {
       this.$router.push('/signup')
@@ -245,10 +337,20 @@ export default {
       document.body.classList.remove('no-scroll') // Re-enable scrolling
     },
     openProductModal(product) {
+      if (this.isGuest) {
+        alert('Please log in to view product details.')
+        this.goToLogin() // Redirect to login page
+        return
+      }
       this.selectedProduct = product
       this.openModal()
     },
     addToCart(product) {
+      if (this.isGuest) {
+        alert('Please log in to add items to the cart.')
+        this.goToLogin() // Redirect to login page
+        return
+      }
       console.log(`Added ${product.name} to cart`)
       // Implement your cart functionality
     },
@@ -287,6 +389,7 @@ export default {
   color: var(--text-color);
 }
 
+/* Header Styling */
 .header-home {
   position: fixed;
   width: 100%;
@@ -296,12 +399,12 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 5px 1%;
+  padding: 10px 2%;
   background-color: #ffffff;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  /* transition: all 0.5s ease; */
 }
 
+/* Logo */
 .logo {
   display: flex;
   width: 85px;
@@ -309,11 +412,7 @@ export default {
   height: auto;
 }
 
-span {
-  font-size: 25px;
-  font-weight: 600;
-  margin-right: 6px;
-}
+/* Navbar Links */
 .navbar {
   display: flex;
 }
@@ -323,18 +422,16 @@ span {
   font-size: 1.1rem;
   font-weight: 500;
   padding: 5px 0;
-  margin: 0px 30px;
+  margin: 0 30px;
   text-decoration: none;
+  transition: color 0.3s;
 }
 
 .navbar a:hover {
   color: var(--main-color);
 }
-.main {
-  display: flex;
-  align-items: center;
-}
 
+/* Header Left Side: Logo and Navbar */
 .head {
   display: flex;
   align-items: center;
@@ -342,43 +439,155 @@ span {
   text-transform: uppercase;
 }
 
-.main .signIn,
-.main .signUp {
-  margin-right: 15px;
-  padding: 8px 20px;
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--text-color);
-  border: 2px solid var(--text-color);
-  border-radius: 5px;
-  background-color: transparent;
-  transition:
-    background-color 0.3s,
-    color 0.3s;
+/* Main Section: Cart and Profile */
+.main {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 20px;
 }
 
-.main .signIn:hover,
-.main .signUp:hover {
-  background-color: var(--text-color);
-  color: #ffffff;
-}
-
-li {
-  list-style-type: none;
-}
-
-.icon {
-  margin-right: 30px;
-  margin-left: 30px;
-}
-
-#check {
-  display: none;
-}
-
-.checkbtn img {
+/* Cart Icon */
+.main .icon {
   cursor: pointer;
-  width: 30px;
+  width: 36px;
+  height: 36px;
+  transition: all 0.2s ease-in-out;
+}
+
+.main .icon:hover {
+  transform: scale(1.1);
+}
+
+/* Profile Icon */
+.profile {
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  border-radius: 50%;
+  border: 3px solid #f7f7f7;
+  filter: drop-shadow(-20px 0 10px rgba(0, 0, 0, 0.1));
+}
+
+.profile:hover {
+  transform: scale(1.05);
+  transition: all 0.2s ease-in-out;
+}
+
+/* Dropdown Menu */
+.dropdown__wrapper {
+  width: 240px;
+  top: 88px;
+  right: 16px;
+  position: absolute;
+  border-radius: 8px;
+  border: 1px solid var(--text-gray);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  animation: fadeOutAnimation ease-in-out 0.3s forwards;
+  background-color: #ffffff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  visibility: hidden;
+  opacity: 0;
+}
+
+.dropdown__wrapper--fade-in {
+  visibility: visible;
+  opacity: 1;
+  animation: fadeInAnimation ease-in-out 0.3s forwards;
+}
+
+/* Dropdown Content */
+.dropdown__group {
+  padding: 12px;
+}
+
+.divider {
+  width: 100%;
+  height: 1px;
+  background-color: var(--text-gray);
+  margin: 8px 0;
+}
+
+/* Dropdown Navigation */
+nav > ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  gap: 4px;
+}
+
+nav > ul > li {
+  height: 40px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding-left: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+nav > ul > li:hover {
+  background-color: var(--main-color-light);
+  color: var(--main-color);
+  text-decoration: underline;
+}
+
+nav > ul > li img {
+  height: 24px;
+  width: 24px;
+}
+
+.dropdown__wrapper li {
+  display: flex;
+  align-items: center;
+}
+
+/* Animations */
+@keyframes fadeInAnimation {
+  0% {
+    opacity: 0;
+    visibility: hidden;
+  }
+  100% {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+@keyframes fadeOutAnimation {
+  0% {
+    opacity: 1;
+    visibility: visible;
+  }
+  100% {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+  .navbar {
+    display: none;
+  }
+
+  .checkbtn img {
+    display: block;
+    cursor: pointer;
+    width: 30px;
+  }
+
+  .main {
+    gap: 10px;
+  }
+
+  .dropdown__wrapper {
+    width: 200px;
+    right: 10px;
+  }
 }
 
 .home-section {
@@ -452,6 +661,44 @@ li {
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+@media (max-width: 768px) {
+  .home-section {
+    flex-direction: column-reverse; /* Stack items vertically, photo on top */
+    padding: 20px; /* Adjust padding for smaller screens */
+    text-align: center; /* Center-align all text */
+  }
+
+  .home-text {
+    margin-top: 20px; /* Add spacing between image and text */
+  }
+
+  .home-text h1 {
+    font-size: 1.9rem; /* Reduce heading size */
+    margin-bottom: 10px; /* Adjust spacing */
+  }
+
+  .home-text p {
+    font-size: 1.2rem; /* Keep paragraph text readable */
+    margin-bottom: 15px; /* Adjust spacing */
+  }
+
+  .home-order {
+    margin: 20px auto; /* Center-align the button */
+    padding: 10px 20px; /* Adjust padding for smaller buttons */
+    font-size: 0.9rem; /* Slightly smaller font size */
+  }
+
+  .home-image-wrapper {
+    width: 145%; /* Make the wrapper take the full width */
+    margin-bottom: 20px; /* Add spacing between image and text */
+  }
+
+  .home-image {
+    max-width: 70%; /* Scale image appropriately */
+    max-height: auto; /* Ensure the aspect ratio is maintained */
+  }
+}
+
 .about-section {
   display: flex;
   flex-direction: row;
@@ -494,6 +741,38 @@ li {
   object-fit: contain;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+@media (max-width: 768px) {
+  .about-section {
+    flex-direction: column-reverse;
+    padding: 20px;
+    text-align: center;
+  }
+
+  .about-text {
+    margin-top: 20px;
+  }
+
+  .about-text h1 {
+    font-size: 1.9rem;
+    margin-bottom: 10px;
+  }
+
+  .about-text p {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+  }
+
+  .about-image-wrapper {
+    width: 145%;
+    margin-bottom: 20px;
+  }
+
+  .about-image {
+    max-width: 70%;
+    max-height: auto;
+  }
 }
 
 .menu-section {

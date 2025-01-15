@@ -1,0 +1,20 @@
+[
+  {
+    "fullName": "John Doe",
+    "userName": "johndoe",
+    "phoneNumber": "1234567890",
+    "birthDate": "2000-01-01",
+    "gender": "Male",
+    "email": "johndoe@example.com",
+    "password": "1234"
+  },
+  {
+    "fullName": "ahhaha ",
+    "userName": "hehe",
+    "phoneNumber": "231231221",
+    "birthDate": "2334-01-01",
+    "gender": "male",
+    "email": "haha@gmail.com",
+    "password": "1234"
+  }
+]

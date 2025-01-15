@@ -9,23 +9,70 @@
 
           <ul class="navbar">
             <li><a href="#">Menu</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#">Member+</a></li>
+            <li><router-link :to="{ path: '/', hash: '#about' }">About</router-link></li>
+            <!-- <li><a href="#">Member+</a></li> -->
           </ul>
         </div>
 
-        <div class="main-menu">
-          <button class="signIn" @click="goToLogin">Sign In</button>
-          <button class="signUp" @click="goToSignUp">Sign Up</button>
-
-          <a href="#" class="icon">
+        <div class="main">
+          <!-- Cart Icon -->
+          <a href="#" class="icon cart">
             <img src="../assets/cart.png" alt="cart" />
           </a>
 
-          <input type="checkbox" id="check" />
-          <label for="check" class="checkbtn">
-            <img src="../assets/menu.png" alt="menu" style="width: 30px" />
-          </label>
+          <!-- Profile Icon -->
+          <span class="navigation__group">
+            <img
+              class="profile"
+              src="../assets/avatar.jpg"
+              alt="User Picture"
+              @click="toggleDropdown"
+              ref="profile"
+            />
+          </span>
+
+          <!-- Dropdown -->
+          <div
+            class="dropdown__wrapper"
+            :class="{ hide: dropdownHidden, 'dropdown__wrapper--fade-in': !dropdownHidden }"
+            ref="dropdown"
+          >
+            <!-- User Name -->
+            <div class="dropdown__group">
+              <div class="user-name">
+                {{ userName || 'Guest' }}
+              </div>
+            </div>
+            <hr class="divider" />
+
+            <nav>
+              <ul>
+                <li>
+                  <img src="../assets/profile.svg" alt="Profile" />
+                  <a href="#" @click.prevent="goToProfile">Profile</a>
+                </li>
+                <hr class="divider" />
+                <li v-if="!isGuest">
+                  <img src="../assets/settings.svg" alt="Settings" />
+                  <router-link to="/orders">Orders</router-link>
+                </li>
+              </ul>
+              <hr class="divider" />
+              <ul>
+                <li>
+                  <img src="../assets/premium.svg" alt="Premium" />
+                  <a href="#" @click="handleMemberClick">Member+</a>
+                </li>
+                <hr class="divider" />
+                <li style="color: #e3452f">
+                  <img src="../assets/logout.svg" alt="Log Out" v-if="!isGuest" />
+                  <a href="#" @click.prevent="isGuest ? goToLogin() : signOut()">
+                    {{ isGuest ? 'Sign In' : 'Log Out' }}
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
         </div>
       </header>
 
@@ -150,6 +197,8 @@ export default {
     return {
       showModal: false,
       selectedProduct: null,
+      dropdownHidden: true,
+      userName: '',
       hotCoffees: [
         {
           id: 1,
@@ -431,9 +480,53 @@ export default {
       ],
     }
   },
+  computed: {
+    isGuest() {
+      return !this.userName // Determines if the user is a guest
+    },
+  },
+  mounted() {
+    // Fetch user information from localStorage after login or account creation
+    const loggedInUser = JSON.parse(localStorage.getItem('currentUser')) || null
+    if (loggedInUser && loggedInUser.userName) {
+      this.userName = loggedInUser.userName // Use userName from logged-in user
+    }
+    document.addEventListener('click', this.handleOutsideClick)
+  },
+  beforeUnmount() {
+    document.removeEventListener('click', this.handleOutsideClick)
+  },
   methods: {
+    toggleDropdown() {
+      this.dropdownHidden = !this.dropdownHidden
+    },
+    handleOutsideClick(event) {
+      const dropdownElement = this.$refs.dropdown
+      const profileElement = this.$refs.profile
+      if (
+        dropdownElement &&
+        !dropdownElement.contains(event.target) &&
+        profileElement &&
+        !profileElement.contains(event.target)
+      ) {
+        this.dropdownHidden = true
+      }
+    },
     goToLogin() {
       this.$router.push('/login')
+    },
+    goToProfile() {
+      if (this.isGuest) {
+        this.goToLogin()
+      } else {
+        this.$router.push('/profile')
+      }
+    },
+    signOut() {
+      localStorage.removeItem('currentUser') // Remove user data
+      this.userName = '' // Reset userName
+      alert('You have been signed out.')
+      this.$router.push('/') // Redirect to the homepage
     },
     goToSignUp() {
       this.$router.push('/signup')
@@ -443,26 +536,40 @@ export default {
     },
     openModal() {
       this.showModal = true
-      document.body.classList.add('no-scroll')
+      document.body.classList.add('no-scroll') // Disable scrolling
     },
     closeModal() {
       this.showModal = false
       this.selectedProduct = null
-      document.body.classList.remove('no-scroll')
+      document.body.classList.remove('no-scroll') // Re-enable scrolling
     },
     openProductModal(product) {
+      if (this.isGuest) {
+        alert('You must be logged in to view product details.')
+        this.goToLogin()
+        return
+      }
       this.selectedProduct = product
       this.openModal()
     },
     addToCart(product) {
+      if (this.isGuest) {
+        alert('You must be logged in to add items to the cart.')
+        this.goToLogin()
+        return
+      }
       console.log(`Added ${product.name} to cart`)
-      // Implement your cart functionality
+      // Implement your cart functionality here
     },
   },
 }
 </script>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
+
 .menu-all {
   padding: 0;
   margin: 0;
@@ -536,6 +643,34 @@ span {
 .main {
   display: flex;
   align-items: center;
+  justify-content: flex-end;
+  gap: 20px;
+}
+
+.main .icon {
+  cursor: pointer;
+  width: 36px;
+  height: 36px;
+  transition: all 0.2s ease-in-out;
+}
+
+.main .icon:hover {
+  transform: scale(1.1);
+}
+
+/* Profile Icon */
+.profile {
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  border-radius: 50%;
+  border: 3px solid #f7f7f7;
+  filter: drop-shadow(-20px 0 10px rgba(0, 0, 0, 0.1));
+}
+
+.profile:hover {
+  transform: scale(1.05);
+  transition: all 0.2s ease-in-out;
 }
 
 .head {
@@ -545,25 +680,97 @@ span {
   text-transform: uppercase;
 }
 
-.main-menu .signIn,
-.main-menu .signUp {
-  margin-right: 15px;
-  padding: 8px 20px;
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--text-color);
-  border: 2px solid var(--text-color);
-  border-radius: 5px;
-  background-color: transparent;
-  transition:
-    background-color 0.3s,
-    color 0.3s;
+.dropdown__wrapper {
+  width: 240px;
+  top: 88px;
+  right: 16px;
+  position: absolute;
+  border-radius: 8px;
+  border: 1px solid var(--text-gray);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  animation: fadeOutAnimation ease-in-out 0.3s forwards;
+  background-color: #ffffff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  visibility: hidden;
+  opacity: 0;
 }
 
-.main-menu .signIn:hover,
-.main-menu .signUp:hover {
-  background-color: var(--text-color);
-  color: #ffffff;
+.dropdown__wrapper--fade-in {
+  visibility: visible;
+  opacity: 1;
+  animation: fadeInAnimation ease-in-out 0.3s forwards;
+}
+
+/* Dropdown Content */
+.dropdown__group {
+  padding: 12px;
+}
+
+.divider {
+  width: 100%;
+  height: 1px;
+  background-color: var(--text-gray);
+  margin: 8px 0;
+}
+
+/* Dropdown Navigation */
+nav > ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  gap: 4px;
+}
+
+nav > ul > li {
+  height: 40px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding-left: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+nav > ul > li:hover {
+  background-color: var(--main-color-light);
+  color: var(--main-color);
+  text-decoration: underline;
+}
+
+nav > ul > li img {
+  height: 24px;
+  width: 24px;
+}
+
+.dropdown__wrapper li {
+  display: flex;
+  align-items: center;
+}
+
+/* Animations */
+@keyframes fadeInAnimation {
+  0% {
+    opacity: 0;
+    visibility: hidden;
+  }
+  100% {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+@keyframes fadeOutAnimation {
+  0% {
+    opacity: 1;
+    visibility: visible;
+  }
+  100% {
+    opacity: 0;
+    visibility: hidden;
+  }
 }
 
 li {

@@ -1,94 +1,94 @@
-<template>
-  <div class="forget-pass">
-    <div class="boxLog">
-      <button class="back-btn" @click="goToLogin">Back to Login</button>
+  <template>
+    <div class="forget-pass">
+      <div class="boxLog">
+        <button class="back-btn" @click="goToLogin">Back to Login</button>
+      </div>
+
+      <section class="container-forgetPass">
+        <header><h1>Forgot Password</h1></header>
+
+        <form @submit.prevent="resetPassword" class="form">
+          <div class="form-group">
+            <label for="current-password">Current Password</label>
+            <input
+              type="password"
+              id="current-password"
+              v-model="currentPassword"
+              placeholder="Enter current password"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="new-password">New Password</label>
+            <input
+              type="password"
+              id="new-password"
+              v-model="newPassword"
+              placeholder="Enter new password"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="confirm-password">Confirm New Password</label>
+            <input
+              type="password"
+              id="confirm-password"
+              v-model="confirmPassword"
+              placeholder="Confirm new password"
+              required
+            />
+          </div>
+
+          <button type="submit" class="reset-btn">Reset Password</button>
+        </form>
+      </section>
     </div>
+  </template>
 
-    <section class="container-forgetPass">
-      <header><h1>Forgot Password</h1></header>
-
-      <form @submit.prevent="resetPassword" class="form">
-        <div class="form-group">
-          <label for="current-password">Current Password</label>
-          <input
-            type="password"
-            id="current-password"
-            v-model="currentPassword"
-            placeholder="Enter current password"
-            required
-          />
-        </div>
-
-        <div class="form-group">
-          <label for="new-password">New Password</label>
-          <input
-            type="password"
-            id="new-password"
-            v-model="newPassword"
-            placeholder="Enter new password"
-            required
-          />
-        </div>
-
-        <div class="form-group">
-          <label for="confirm-password">Confirm New Password</label>
-          <input
-            type="password"
-            id="confirm-password"
-            v-model="confirmPassword"
-            placeholder="Confirm new password"
-            required
-          />
-        </div>
-
-        <button type="submit" class="reset-btn">Reset Password</button>
-      </form>
-    </section>
-  </div>
-</template>
-
-<script>
-export default {
-  data() {
-    return {
-      currentPassword: '',
-      newPassword: '',
-      confirmPassword: '',
-      errorMessage: '',
-    }
-  },
-  methods: {
-    goToLogin() {
-      // Navigate back to the login page
-      this.$router.push('/login')
-    },
-    resetPassword() {
-      // Clear previous error message
-      this.errorMessage = ''
-
-      // Validate form input
-      if (this.newPassword !== this.confirmPassword) {
-        this.errorMessage = 'New password and confirm password do not match.'
-        return
+  <script>
+  export default {
+    data() {
+      return {
+        currentPassword: '',
+        newPassword: '',
+        confirmPassword: '',
+        errorMessage: '',
       }
-
-      // Check password length (example validation)
-      if (this.newPassword.length < 6) {
-        this.errorMessage = 'New password must be at least 6 characters long.'
-        return
-      }
-
-      // Mock API call or logic to reset the password
-      alert(
-        `Password reset successfully!\n- Current Password: ${this.currentPassword}\n- New Password: ${this.newPassword}`,
-      )
-
-      // Optionally navigate back to the login page
-      this.$router.push('/login')
     },
-  },
-}
-</script>
+    methods: {
+      goToLogin() {
+        // Navigate back to the login page
+        this.$router.push('/login')
+      },
+      resetPassword() {
+        // Clear previous error message
+        this.errorMessage = ''
+
+        // Validate form input
+        if (this.newPassword !== this.confirmPassword) {
+          this.errorMessage = 'New password and confirm password do not match.'
+          return
+        }
+
+        // Check password length (example validation)
+        if (this.newPassword.length < 6) {
+          this.errorMessage = 'New password must be at least 6 characters long.'
+          return
+        }
+
+        // Mock API call or logic to reset the password
+        alert(
+          `Password reset successfully!\n- Current Password: ${this.currentPassword}\n- New Password: ${this.newPassword}`,
+        )
+
+        // Optionally navigate back to the login page
+        this.$router.push('/login')
+      },
+    },
+  }
+  </script>
 
 <style>
 * {

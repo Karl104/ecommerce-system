@@ -64,11 +64,6 @@
           <input type="password" placeholder="Password" v-model="password" />
         </div>
 
-        <p>
-          Create a password 4 to 16 characters long that includes at least 1 uppercase and 1
-          lowercase letter, 1 number.
-        </p>
-
         <button type="submit">Create Account</button>
       </form>
     </section>
@@ -243,36 +238,67 @@ export default {
   },
   methods: {
     handleSignUp() {
+      // Basic validations
       if (
         !this.fullName ||
         !this.userName ||
         !this.phoneNumber ||
         !this.birthDate ||
+        !this.gender ||
         !this.email ||
         !this.password
       ) {
-        alert('Please fill in all the fields')
-      } else if (!this.validatePassword(this.password)) {
-        alert(
-          'Password must be 4 to 16 characters long, include at least 1 uppercase letter, 1 lowercase letter, and 1 number.',
-        )
-      } else {
-        console.log('Signing up with:', {
-          fullName: this.fullName,
-          userName: this.userName,
-          phoneNumber: this.phoneNumber,
-          birthDate: this.birthDate,
-          gender: this.gender,
-          email: this.email,
-          password: this.password,
-        })
-
-        // this.goToLogin() // Uncomment if database is integrated
+        alert('Please fill in all the fields.')
+        return
       }
+      if (this.password.length < 4) {
+        alert('Password must be at least 4 characters long.')
+        return
+      }
+
+      // Retrieve existing users from localStorage or initialize as empty array
+      const existingUsers = JSON.parse(localStorage.getItem('users')) || []
+
+      // Check if userName or email already exists
+      const isDuplicate = existingUsers.some(
+        (user) => user.userName === this.userName || user.email === this.email,
+      )
+      if (isDuplicate) {
+        alert('Username or email already in use. Please choose another.')
+        return
+      }
+
+      // Store user data
+      const userData = {
+        fullName: this.fullName,
+        userName: this.userName,
+        phoneNumber: this.phoneNumber,
+        birthDate: this.birthDate,
+        gender: this.gender,
+        email: this.email,
+        password: this.password,
+      }
+
+      existingUsers.push(userData)
+      localStorage.setItem('users', JSON.stringify(existingUsers))
+
+      console.log('User signed up:', userData)
+      alert('Signup successful! Redirecting to login page.')
+
+      // Clear input fields
+      this.resetForm()
+
+      // Navigate to login page
+      this.goToLogin()
     },
-    validatePassword(password) {
-      const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{4,16}$/
-      return passwordRegex.test(password)
+    resetForm() {
+      this.fullName = ''
+      this.userName = ''
+      this.phoneNumber = ''
+      this.birthDate = ''
+      this.gender = ''
+      this.email = ''
+      this.password = ''
     },
     goToLogin() {
       this.$router.push('/login')
